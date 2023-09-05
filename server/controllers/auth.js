@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     if (isCorrectPass) {
       let data = {
         email,
-        id: _id,
+        id: user._id,
       };
       const token = jwt.sign(data, jwtKey);
       res.status(200).json({name: user.name, token});
