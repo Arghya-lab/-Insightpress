@@ -1,3 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Keenya Coffee Rg';
+  src: url('./assets/kenyan-coffee-rg.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@layer components {
+  .btn {
+    @apply py-1 px-3 rounded-md border border-transparent font-Roboto cursor-pointer bg-black text-white hover:bg-zinc-900;
+  }
+}
+@layer components {
+  .inputField {
+    @apply w-2/3 max-w-xl h-10 mx-6 px-4 border-2 border-zinc-500 font-popins;
+  }
+}
