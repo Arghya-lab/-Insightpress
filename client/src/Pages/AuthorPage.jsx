@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import PostWidget from "../Components/PostWidget";
 
-function Home() {
-  const [blogs, setBlogs] = useState(null)
+function AuthorPage() {
+  const [blogs, setBlogs] = useState(null);
+  const { id } = useParams();
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const allBlogsApi = `${apiBaseUrl}/api/blog`;
+  const allBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
 
   const fetchAllBlogs = async () => {
     try {
       const res = await fetch(allBlogsApi);
-      const data = await res.json()
-      setBlogs(data)
+      const data = await res.json();
+      setBlogs(data);
     } catch (error) {
       console.log(error);
     }
@@ -20,13 +22,13 @@ function Home() {
 
   useEffect(() => {
     fetchAllBlogs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
+    <div>
       <Navbar />
-      <div className="px-[calc((100vw-1024px)/2)]">
+      <div>
         {blogs &&
           blogs.map((blog) => (
             <PostWidget
@@ -37,11 +39,11 @@ function Home() {
               summary={blog.summary}
               createdAt={blog.createdAt}
             />
-            ))
-          }
+          ))}
+        {/* add author dp, name, followers, about, follow/unflow button */}
       </div>
-    </>
+    </div>
   );
 }
 
-export default Home;
+export default AuthorPage;

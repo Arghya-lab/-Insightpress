@@ -9,14 +9,17 @@ router.post("/", uploadBlog)
 // get a blog using : GET /api/blog/:id
 router.get("/:id", getSingleBlog)
 
-// get all blog using : GET /api/blog
+// get all blogs using : GET /api/blog
 router.get("/", getBlogs)
 
+// get all blogs of a author using : GET /api/blog/author/:id
+// router.get("/author/:id", getBlogs)
+
 // update a blog using : PATCH /api/blog/:id
-// router.patch("/:id", getSingleBlog)
+// router.patch("/:id", updateBlog)
 
 // delete a blog using : DELETE /api/blog/:id
-// router.delete("/:id", getSingleBlog)
+// router.delete("/:id", deleteBlog)
 
 
 module.exports = router

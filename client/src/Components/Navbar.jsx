@@ -1,4 +1,3 @@
-import React from "react"
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { setLogout } from "../features/auth/authSlice";
@@ -10,7 +9,7 @@ function Navbar() {
 
   const name = useSelector((state)=>state.auth.name)
 
-  const handleClick = () => {
+  const handleLoginLogout = () => {
     if (name) {
       dispatch(setLogout())
     } else {
@@ -19,13 +18,13 @@ function Navbar() {
   }
 
   return (
-    <div className="px-[calc((100vw-1024px)/2)] bg-black flexCenter">
+    <div className="px-[calc((100vw-1024px)/2)] bg-zinc-950 flexCenter">
       <h1 className="text-white font-KeenyaCoffee text-4xl m-4">Insight Social</h1>
       <div className="mx-4 flex">
-        <button type="button" className="btn m-2 bg-black text-white hover:text-zinc-200 flexCenter">
+        <button type="button" className="btn m-2 bg-zinc-950 text-white hover:text-zinc-200 flexCenter" onClick={()=>navigate()}>
         <HiOutlinePencilAlt />Write
         </button>
-        <button type="button" className="btn m-2 bg-white text-black hover:bg-zinc-200 " onClick={handleClick}>
+        <button type="button" className="btn m-2 bg-white text-zinc-950 hover:bg-zinc-200 " onClick={handleLoginLogout}>
           {name?"Logout":"Login"}
         </button>
         
