@@ -3,6 +3,7 @@ require('dotenv').config()
 const cors = require('cors')
 const connectToMongo = require('./db')
 const authRouter = require('./routes/auth')
+const blogRouter = require('./routes/blog')
 
 const app = express()
 const port = process.env.PORT || 5001
@@ -17,9 +18,9 @@ connectToMongo()
 // Routes
 app.use('/api/auth', authRouter)
 // app.use('/api/author', authorsRouter)
-// app.use('/api/blogs', blogtsRouter)
+app.use('/api/blog', blogRouter)
 
 // start server
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}/`)
+  console.log(`Example app listening on port http://localhost:${port}`)
 })
