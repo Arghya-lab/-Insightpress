@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Keenya Coffee Rg', ...defaultTheme.fontFamily.serif],
+        KeenyaCoffee: ['Keenya Coffee Rg', ...defaultTheme.fontFamily.serif],
         popins: ['Poppins', ...defaultTheme.fontFamily.serif],
         Roboto: ['Roboto', ...defaultTheme.fontFamily.sans],
      },

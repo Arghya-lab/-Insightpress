@@ -29,7 +29,7 @@ const getSingleBlog = async(req, res) => {
 
 const getBlogs = async(req, res) => {
   try {
-    const blogsData = await Blog.find().sort({createdAt: desc}).limit(20)
+    const blogsData = await Blog.find().sort({createdAt: "desc"}).limit(20)
     
     res.status(200).json(blogsData)
   } catch (error) {

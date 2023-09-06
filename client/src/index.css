@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: 'Keenya Coffee Rg';
-  src: url('./assets/kenyan-coffee-rg.otf');
+  src: url('/assets/kenyan-coffee-rg.otf');
   font-weight: 500;
   font-style: normal;
 }
@@ -24,8 +24,15 @@ body {
     @apply py-1 px-3 rounded-md border border-transparent font-Roboto cursor-pointer bg-black text-white hover:bg-zinc-900;
   }
 }
+
 @layer components {
   .inputField {
     @apply w-2/3 max-w-xl h-10 mx-6 px-4 border-2 border-zinc-500 font-popins;
+  }
+}
+
+@layer components {
+  .flexCenter {
+    @apply  flex justify-between items-center;
   }
 }

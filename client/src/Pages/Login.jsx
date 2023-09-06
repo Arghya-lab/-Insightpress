@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setAuth } from "../features/auth/authSlice";
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL
-const signupUrl = `${baseUrl}api/auth/signup/`
-const loginUrl = `${baseUrl}api/auth/login/`
-
 function Login() {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+  const signupUrl = `${apiBaseUrl}/api/auth/signup`
+  const loginUrl = `${apiBaseUrl}/api/auth/login`
+
   const [isLoginPage, setIsLoginPage] = useState(true)
 
   const dispatch = useDispatch()
