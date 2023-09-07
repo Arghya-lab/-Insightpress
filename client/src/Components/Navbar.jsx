@@ -7,10 +7,10 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const name = useSelector((state)=>state.auth.name)
+  const token = useSelector((state)=>state.auth.token)
 
   const handleLoginLogout = () => {
-    if (name) {
+    if (token) {
       dispatch(setLogout())
     } else {
       navigate("/login")
@@ -25,7 +25,7 @@ function Navbar() {
         <HiOutlinePencilAlt />Write
         </button>
         <button type="button" className="btn m-2 bg-white text-zinc-950 hover:bg-zinc-200 " onClick={handleLoginLogout}>
-          {name?"Logout":"Login"}
+          {token?"Logout":"Login"}
         </button>
         
       </div>

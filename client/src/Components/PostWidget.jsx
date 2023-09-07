@@ -10,16 +10,16 @@ function PostWidget({ id, author, title, summary, createdAt }) {
   const timePassed = formatDistanceToNow(parsedDate, {
     includeSeconds: true,
   });
-
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const blogApi = `${apiBaseUrl}/api/blog/${id}`;
-
+  
   const handleAuthorClick = () => {
     navigate(`author/${id}`);
   };
-
+  
   const handleShowBlog = async () => {
     try {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+      const blogApi = `${apiBaseUrl}/api/blog/${id}`;
+      
       const res = await fetch(blogApi);
       const blogData = await res.json()
       navigate(`blog/${id}`, { state: blogData });

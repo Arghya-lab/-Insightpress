@@ -1,12 +1,15 @@
 const Blog = require('../models/Blog')
+// const {  id, name, email } = req.user  // user data came via token
+
 
 // Create
 const uploadBlog = async (req, res) => {
   try {
-    const { author, userId, title, summary, content } = req.body
+    const { title, summary, content } = req.body
+    const {  id, name } = req.user  // user data came via token
     const blogData = await Blog.create({
-      author,
-      userId,
+      author: name,
+      userId: id,
       title,
       summary,
       content,

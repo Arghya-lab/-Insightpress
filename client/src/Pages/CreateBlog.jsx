@@ -1,44 +1,37 @@
 import { Formik, Form, Field } from "formik";
 import ReactQuill from "react-quill";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import EditorToolbar, { modules, formats } from "../Components/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
+import { useSelector } from "react-redux";
 
-function CreateBlog() {  
-  const userId = useSelector((state)=> state.auth.id)
-  const author = useSelector((state)=> state.auth.name)
-  const navigate = useNavigate()
+function CreateBlog() {
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
-  const blogSubmitApi = `${apiBaseUrl}/api/blog`
-
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const blogSubmitApi = `${apiBaseUrl}/api/blog`;
 
   const handleBlogSubmit = async (values, actions) => {
-    console.log(values);
-    const blogData = {userId, author, ...values }
     const res = await fetch(blogSubmitApi, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(blogData),
-    })
+      headers: { "Content-Type": "application/json", "auth-token": token },
+      body: JSON.stringify(values),
+    });
     if (res.ok) {
       actions.setSubmitting(false);
       console.log("Blog uploaded sucessful");
-      navigate("/")
+      navigate("/");
     } else {
       console.log("wrong credentials");
     }
-    setTimeout(() => {
-      alert(JSON.stringify(blogData))
-    }, 1000);
-  }
+  };
 
   return (
     <div>
       <Navbar />
-      <div className="px-[calc((100vw-1024px)/2)] mx-10 my-16">
+      <div className="px-[calc((100vw-1024px)/2)] mx-4 my-16">
         <Formik
           initialValues={{ title: "", summary: "", content: "" }}
           onSubmit={handleBlogSubmit}>
@@ -68,7 +61,7 @@ function CreateBlog() {
                     placeholder={"Write something awesome..."}
                     value={field.value}
                     onChange={field.onChange(field.name)}
-                    style={{height: 400 }}
+                    style={{ height: 400 }}
                   />
                 </div>
               )}

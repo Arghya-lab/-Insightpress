@@ -32,7 +32,7 @@ function Login() {
 
   return (
     <>
-      <h1 className="px-[calc((100vw-1024px)/2)] text-white bg-black font-serif text-4xl p-4">
+      <h1 className="text-white bg-black font-serif text-4xl p-4">
         Insight Social
       </h1>
       <Formik
@@ -43,7 +43,7 @@ function Login() {
           
           <Field type="email" name="email" placeholder="email" className="inputField" />
           <Field type="password" name="password" placeholder="password" className="inputField" />
-          <button type="submit" className="btn w-2/3 max-w-xl h-10">{isLoginPage?"Login":"Signup"}</button>
+          <button type="submit" className="btn w-10/12 max-w-xl h-10">{isLoginPage?"Login":"Signup"}</button>
         </Form>
       </Formik>
       <button type="button" onClick={()=>setIsLoginPage(!isLoginPage)} className="mt-16 w-2/3 max-w-xl h-8 bg-transparent text-black hover:text-zinc-600 font-Roboto">{isLoginPage?"Don’t have an account? Join":"Already have an account? Login"}</button>

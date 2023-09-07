@@ -8,11 +8,11 @@ function AuthorPage() {
   const { id } = useParams();
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const allBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
+  const authorBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
 
   const fetchAllBlogs = async () => {
     try {
-      const res = await fetch(allBlogsApi);
+      const res = await fetch(authorBlogsApi);
       const data = await res.json();
       setBlogs(data);
     } catch (error) {

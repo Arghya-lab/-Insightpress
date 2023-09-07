@@ -26,7 +26,7 @@ const BlogSchema = new mongoose.Schema({
   content: {
     type: String,
     min: 1000,
-    max: 10000,
+    max: 30000,
     required: true,
   },
 },{timestamps: true});
