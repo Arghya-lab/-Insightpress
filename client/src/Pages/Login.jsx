@@ -5,26 +5,24 @@ import { useNavigate } from "react-router-dom"
 import { setAuth } from "../features/auth/authSlice";
 
 function Login() {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
-  const signupUrl = `${apiBaseUrl}/api/auth/signup`
-  const loginUrl = `${apiBaseUrl}/api/auth/login`
-
   const [isLoginPage, setIsLoginPage] = useState(true)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
   const handleSubmit = async(values, actions) => {
-    const res = await fetch(isLoginPage?loginUrl:signupUrl, {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+    const signupApi = `${apiBaseUrl}/api/auth/signup`
+    const loginApi = `${apiBaseUrl}/api/auth/login`
+
+    const res = await fetch(isLoginPage?loginApi:signupApi, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(values),
     })
     if (res.ok) {
       const data = await res.json();
-      const { email } = values
-      const userData = {email, ...data}
-      dispatch(setAuth(userData))
+      dispatch(setAuth(data))
       actions.setSubmitting(false);
       navigate("/")
     } else {

@@ -3,9 +3,10 @@ const Blog = require('../models/Blog')
 // Create
 const uploadBlog = async (req, res) => {
   try {
-    const { author, title, summary, content } = req.body
+    const { author, userId, title, summary, content } = req.body
     const blogData = await Blog.create({
       author,
+      userId,
       title,
       summary,
       content,

@@ -25,11 +25,10 @@ function BlogPage() {
           </div>
           <p className="font-Roboto text-zinc-500 text-sm">{timePassed}</p>
         </div>
-        <div
-          className="font-Roboto text-zinc-700 text-lg font-medium tracking-wide leading-8 antialiased"
-          style={{ wordSpacing: "0.15em" }}>
-          {content}
-        </div>
+        <div className="font-Roboto text-zinc-900 tracking-normal antialiased"
+          style={{ wordSpacing: "0.16em" }}
+          dangerouslySetInnerHTML={{__html: content}}
+        />
       </div>
     </>
   );

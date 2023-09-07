@@ -15,13 +15,8 @@ const signupUser = async (req, res) => {
       email,
       password: hashPassword,
     });
-    let data = {
-      email,
-      id: user._id,
-    };
-    const token = jwt.sign(data, jwtKey);
-    res.status(200).send({name: user.name, token});
-
+    const token = jwt.sign({ id: user._id, email }, jwtKey);
+    res.status(200).send({ id: user._id, name: user.name, email, token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -33,12 +28,8 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
     const isCorrectPass = bcrypt.compareSync(password, user.password);
     if (isCorrectPass) {
-      let data = {
-        email,
-        id: user._id,
-      };
-      const token = jwt.sign(data, jwtKey);
-      res.status(200).json({name: user.name, token});
+      const token = jwt.sign({  id: user._id, email }, jwtKey);
+      res.status(200).json({ id: user._id, name: user.name, email, token });
     } else {
       res.status(400).json("Incorrect credentials");
     }
