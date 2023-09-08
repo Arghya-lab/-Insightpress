@@ -31,7 +31,7 @@ function CreateBlog() {
   return (
     <div>
       <Navbar />
-      <div className="px-[calc((100vw-1024px)/2)] mx-4 my-16">
+      <div className="px-[calc((100vw-1280px)/2)] mx-4 my-16">
         <Formik
           initialValues={{ title: "", summary: "", content: "" }}
           onSubmit={handleBlogSubmit}>

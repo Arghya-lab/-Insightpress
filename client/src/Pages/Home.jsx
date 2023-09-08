@@ -26,7 +26,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="px-[calc((100vw-1024px)/2)]">
+      <div className="px-[calc((100vw-1280px)/2)]">
         {blogs &&
           blogs.map((blog) => (
             <PostWidget

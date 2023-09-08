@@ -15,7 +15,7 @@ function BlogPage() {
   return (
     <>
       <Navbar />
-      <div className="px-[calc((100vw-1024px)/2)] my-16 mx-4 text-left">
+      <div className="px-[calc((100vw-1280px)/2)] my-16 mx-4 text-left">
         <h1 className="font-popins text-4xl font-bold text-zinc-900">
           {title}
         </h1>

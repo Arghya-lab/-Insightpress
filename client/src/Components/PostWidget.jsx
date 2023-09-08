@@ -30,7 +30,7 @@ function PostWidget({ id, author, title, summary, createdAt }) {
   };
 
   return (
-    <div className="mx-2 max-w-2xl my-10 text-left">
+    <div className="mx-2 max-w-3xl my-10 text-left">
       <p
         className="mx-2 font-Roboto text-zinc-600 text-sm cursor-pointer"
         onClick={handleAuthorClick}>
