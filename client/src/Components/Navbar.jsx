@@ -12,6 +12,7 @@ function Navbar() {
   const handleLoginLogout = () => {
     if (token) {
       dispatch(setLogout());
+      navigate("/")
     } else {
       navigate("/login");
     }

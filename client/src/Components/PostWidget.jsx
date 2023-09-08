@@ -22,7 +22,7 @@ function PostWidget({ id, author, title, summary, createdAt }) {
       
       const res = await fetch(blogApi);
       const blogData = await res.json()
-      navigate(`blog/${id}`, { state: blogData });
+      navigate(`blog/${id}`, { state: {...blogData, id} });
     } catch (error) {
       console.log(error);
     }
