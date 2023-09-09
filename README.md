@@ -13,7 +13,7 @@ Welcome to the Insightpress BlogApp repository! This project is a replica of the
 
 ## To Do
 
-- [ ] Update, Delete blog fatures.
+- [x] Update, Delete blog fatures.
 - [ ] Customize user profile with a bio and profile picture.
 - [ ] Enhance user profile page with additional customization options.
 - [ ] Add social sharing functionality for articles.

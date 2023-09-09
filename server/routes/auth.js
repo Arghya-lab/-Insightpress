@@ -7,13 +7,14 @@ const router = express.Router()
 // multer storage config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/assets")
+    cb(null, "./public/assets/avatar")
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
   }
 })
 const upload = multer({ storage })
+
 
 // signup using : POST api/auth/signup
 router.post("/signup", upload.single("avatarImg"), signupUser)

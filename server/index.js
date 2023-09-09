@@ -4,7 +4,6 @@ const cors = require('cors')
 const connectToMongo = require('./db')
 const authRouter = require('./routes/auth')
 const blogRouter = require('./routes/blog')
-const { signupUser } = require('./controllers/auth')
 
 const app = express()
 const port = process.env.PORT || 5001
@@ -17,23 +16,6 @@ app.use("/assets", express.static(__dirname + "/public/assets")) // To serve sta
 
 // Connect to mongo db
 connectToMongo()
-
-// // multer config
-// const multer  = require('multer')
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "./public/assets")
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// const upload = multer({ storage })
-
-// // signup using : POST api/auth/signup
-// app.post("/api/auth/signup", upload.single("avatarImg"), signupUser)
-
 
 // Routes
 app.use('/api/auth', authRouter)

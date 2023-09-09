@@ -44,7 +44,7 @@ function Navbar() {
         {token ? (
           <div>
             <img
-              src={`${serverBaseUrl}/assets/${avatarImgName}`}
+              src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
               className="w-10 h-10 rounded-full object-cover"
               alt="Avatar"
             />
