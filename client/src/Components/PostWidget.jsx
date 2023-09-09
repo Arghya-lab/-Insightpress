@@ -10,39 +10,47 @@ function PostWidget({ id, author, title, summary, createdAt }) {
   const timePassed = formatDistanceToNow(parsedDate, {
     includeSeconds: true,
   });
-  
+
   const handleAuthorClick = () => {
     navigate(`author/${id}`);
   };
-  
+
   const handleShowBlog = async () => {
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
       const blogApi = `${apiBaseUrl}/api/blog/${id}`;
-      
+
       const res = await fetch(blogApi);
-      const blogData = await res.json()
-      navigate(`blog/${id}`, { state: {...blogData, id} });
+      const blogData = await res.json();
+      navigate(`blog/${id}`, { state: { ...blogData, id } });
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
-    <div className="mx-2 max-w-3xl my-10 text-left">
-      <p
-        className="mx-2 font-Roboto text-zinc-600 text-sm cursor-pointer"
-        onClick={handleAuthorClick}>
-        {author}
-      </p>
+    <div className="mx-4 max-w-3xl my-10 text-left">
+      <div className="mx-1 flex items-center space-x-2">
+        <div>
+          <img
+            src="https://tecdn.b-cdn.net/img/new/avatars/5.webp"
+            className="w-7 rounded-full"
+            alt="Avatar"
+          />
+        </div>
+        <p
+          className="font-Roboto text-zinc-600 text-sm cursor-pointer"
+          onClick={handleAuthorClick}>
+          {author}
+        </p>
+      </div>
       <div className="cursor-pointer" onClick={handleShowBlog}>
-        <p className="mx-2 mb-2 font-popins text-xl font-semibold">{title}</p>
-        <p className="mx-2 font-Roboto text-zinc-600 leading-tight line-clamp-2">
+        <p className="mb-2 font-popins text-xl font-semibold">{title}</p>
+        <p className="font-Roboto text-zinc-600 leading-tight line-clamp-2">
           {summary}
         </p>
       </div>
-      <p className="mx-2 mt-2 font-Roboto text-zinc-500 text-xs">
+      <p className="mt-2 font-Roboto text-zinc-500 text-xs">
         {timePassed}
       </p>
     </div>
