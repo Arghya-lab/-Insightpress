@@ -1,23 +1,30 @@
 const mongoose = require("mongoose");
 
 const BlogSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: String,
-    required: true,
+  authorData: {
+    authorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    author: {
+      type: String,
+      required: true,
+    },
+    avatarImgName: {
+      type: String,
+      required: true,
+    },
   },
   title: {
     type: String,
-    min: 20,
+    min: 15,
     max: 70,
     required: true,
   },
   summary: {
     type: String,
-    min: 60,
+    min: 40,
     max: 100,
     required: true,
   },

@@ -2,8 +2,10 @@ import PropTypes from "prop-types";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
-function PostWidget({ id, author, title, summary, createdAt }) {
+function PostWidget({ id, authorData, title, summary, createdAt }) {
   const navigate = useNavigate();
+  const { authorId, author, avatarImgName } = authorData;
+  const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -12,14 +14,13 @@ function PostWidget({ id, author, title, summary, createdAt }) {
   });
 
   const handleAuthorClick = () => {
-    navigate(`author/${id}`);
+    navigate(`author/${authorId}`);
   };
 
   const handleShowBlog = async () => {
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
       const blogApi = `${apiBaseUrl}/api/blog/${id}`;
-
       const res = await fetch(blogApi);
       const blogData = await res.json();
       navigate(`blog/${id}`, { state: { ...blogData, id } });
@@ -33,7 +34,7 @@ function PostWidget({ id, author, title, summary, createdAt }) {
       <div className="mx-1 flex items-center space-x-2">
         <div>
           <img
-            src="https://tecdn.b-cdn.net/img/new/avatars/5.webp"
+            src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
             className="w-7 rounded-full"
             alt="Avatar"
           />
@@ -50,16 +51,14 @@ function PostWidget({ id, author, title, summary, createdAt }) {
           {summary}
         </p>
       </div>
-      <p className="mt-2 font-Roboto text-zinc-500 text-xs">
-        {timePassed}
-      </p>
+      <p className="mt-2 font-Roboto text-zinc-500 text-xs">{timePassed}</p>
     </div>
   );
 }
 
 PostWidget.propTypes = {
   id: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
+  authorData: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,

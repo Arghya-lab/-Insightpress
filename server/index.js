@@ -3,6 +3,7 @@ require('dotenv').config()
 const cors = require('cors')
 const connectToMongo = require('./db')
 const authRouter = require('./routes/auth')
+const authorsRouter = require('./routes/author')
 const blogRouter = require('./routes/blog')
 
 const app = express()
@@ -19,7 +20,7 @@ connectToMongo()
 
 // Routes
 app.use('/api/auth', authRouter)
-// app.use('/api/author', authorsRouter)
+app.use('/api/author', authorsRouter)
 app.use('/api/blog', blogRouter)
 
 // start server

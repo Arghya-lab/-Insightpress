@@ -4,6 +4,7 @@ import PostWidget from "../Components/PostWidget";
 
 function Home() {
   const [blogs, setBlogs] = useState(null)
+  //  blogs includes =>  _id, authorData: { authorId, author, avatarImgName }, title, summary, content, createdAt, editedAt,  __v
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const allBlogsApi = `${apiBaseUrl}/api/blog`;
@@ -13,6 +14,7 @@ function Home() {
       const res = await fetch(allBlogsApi);
       const data = await res.json()
       setBlogs(data)
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +34,7 @@ function Home() {
             <PostWidget
               key={blog._id}
               id={blog._id}
-              author={blog.author}
+              authorData={blog.authorData}
               title={blog.title}
               summary={blog.summary}
               createdAt={blog.createdAt}

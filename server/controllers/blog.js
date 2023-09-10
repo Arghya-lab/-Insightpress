@@ -1,4 +1,5 @@
 const Blog = require('../models/Blog')
+const User = require('../models/User')
 // const {  id, name, email } = req.user  // user data came via token
 
 
@@ -6,10 +7,15 @@ const Blog = require('../models/Blog')
 const uploadBlog = async (req, res) => {
   try {
     const { title, summary, content } = req.body
-    const {  id, name } = req.user  // user data came via token
+    const { id } = req.user  // user data came via token
+    const authorData = await User.findById(id) // user data come from user db
+    const { _id ,name, avatarImgName, } = authorData
     const blogData = await Blog.create({
-      author: name,
-      userId: id,
+      authorData: {
+        authorId: _id,
+        author: name,
+        avatarImgName, 
+      },
       title,
       summary,
       content,
@@ -17,6 +23,7 @@ const uploadBlog = async (req, res) => {
     res.status(200).json(blogData)
   } catch (error) {    
     res.status(400).json(error)
+    console.log(error);
   }
 }
 
