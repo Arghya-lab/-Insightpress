@@ -9,13 +9,21 @@ function BlogPage() {
   const loginUserid = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
-  // location.state contains =>  _id, userId, author, content, createdAt, summary, title, updatedAt, __v
-  const { id, userId, author, title, summary, content, createdAt } = location.state;
-  const isOwnBlog = userId === loginUserid;
+  // location.state contains =>  id, authorData: {authorId, author, avatarImgName}, title, summary, createdAt
+  const {
+    id,
+    authorData: { authorId, author, avatarImgName },
+    title,
+    summary,
+    content,
+    createdAt,
+  } = location.state;
+  const isOwnBlog = authorId === loginUserid;
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -23,11 +31,17 @@ function BlogPage() {
     includeSeconds: true,
   });
 
-  const handleEdit = ()=> {
-    navigate("/create", { state: { isEditPurpose: true, blogId: id, title, summary, content }})
-  }
-  
-  const handleDelete = async ()=> {
+  const handleAuthorClick = () => {
+    navigate(`author/${authorId}`);
+  };
+
+  const handleEdit = () => {
+    navigate("/create", {
+      state: { isEditPurpose: true, blogId: id, title, summary, content },
+    });
+  };
+
+  const handleDelete = async () => {
     const res = await fetch(`${apiBaseUrl}/api/blog/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json", "auth-token": token },
@@ -38,7 +52,7 @@ function BlogPage() {
     } else {
       console.log("wrong credentials");
     }
-  }
+  };
 
   return (
     <>
@@ -58,7 +72,14 @@ function BlogPage() {
           {title}
         </h1>
         <div className=" my-12">
-          <div>
+          <div className="my-3 flex items-center space-x-2 cursor-pointer" onClick={handleAuthorClick}>
+            <div>
+              <img
+                src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
+                className="w-10 rounded-full"
+                alt="Avatar"
+              />
+            </div>
             <p className="font-Roboto text-zinc-700 text-lg">{author}</p>
           </div>
           <p className="font-Roboto text-zinc-500 text-sm">{timePassed}</p>

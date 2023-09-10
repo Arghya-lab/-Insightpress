@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
-function PostWidget({ id, authorData, title, summary, createdAt }) {
+function PostWidget({ id, authorData, title, summary, content, createdAt }) {
   const navigate = useNavigate();
   const { authorId, author, avatarImgName } = authorData;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
@@ -19,11 +19,7 @@ function PostWidget({ id, authorData, title, summary, createdAt }) {
 
   const handleShowBlog = async () => {
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-      const blogApi = `${apiBaseUrl}/api/blog/${id}`;
-      const res = await fetch(blogApi);
-      const blogData = await res.json();
-      navigate(`blog/${id}`, { state: { ...blogData, id } });
+      navigate(`blog/${id}`, { state: { id, authorData, title, summary, content, createdAt } });
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +27,7 @@ function PostWidget({ id, authorData, title, summary, createdAt }) {
 
   return (
     <div className="mx-4 max-w-3xl my-10 text-left">
-      <div className="mx-1 flex items-center space-x-2">
+      <div className="mx-1 flex items-center space-x-2 cursor-pointer" onClick={handleAuthorClick}>
         <div>
           <img
             src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
@@ -40,8 +36,8 @@ function PostWidget({ id, authorData, title, summary, createdAt }) {
           />
         </div>
         <p
-          className="font-Roboto text-zinc-600 text-sm cursor-pointer"
-          onClick={handleAuthorClick}>
+          className="font-Roboto text-zinc-600 text-sm"
+          >
           {author}
         </p>
       </div>
@@ -51,7 +47,7 @@ function PostWidget({ id, authorData, title, summary, createdAt }) {
           {summary}
         </p>
       </div>
-      <p className="mt-2 font-Roboto text-zinc-500 text-xs">{timePassed}</p>
+      <p className="mt-2 font-Roboto text-zinc-500 text-xs">{timePassed} ago</p>
     </div>
   );
 }
@@ -61,6 +57,7 @@ PostWidget.propTypes = {
   authorData: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
 };
 

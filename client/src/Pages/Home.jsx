@@ -37,6 +37,7 @@ function Home() {
               authorData={blog.authorData}
               title={blog.title}
               summary={blog.summary}
+              content={blog.content}
               createdAt={blog.createdAt}
             />
             ))
