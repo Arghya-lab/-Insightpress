@@ -4,6 +4,7 @@ import Navbar from "../Components/Navbar";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
+import "@fontsource/nunito/";
 
 function BlogPage() {
   const loginUserid = useSelector((state) => state.auth.id);
@@ -20,6 +21,7 @@ function BlogPage() {
     authorData: { authorId, author, avatarImgName },
     title,
     summary,
+    featuredImgName,
     content,
     createdAt,
   } = location.state;
@@ -37,7 +39,14 @@ function BlogPage() {
 
   const handleEdit = () => {
     navigate("/create", {
-      state: { isEditPurpose: true, blogId: id, title, summary, content },
+      state: {
+        isEditPurpose: true,
+        blogId: id,
+        title,
+        summary,
+        featuredImgName,
+        content,
+      },
     });
   };
 
@@ -57,10 +66,10 @@ function BlogPage() {
   return (
     <>
       <Navbar />
-      <div className="px-[calc((100vw-1280px)/2)] my-12 mx-4 text-left">
+      <div className="px-[calc((100vw-1280px)/2)] my-8 mx-4 text-left">
         {isOwnBlog ? (
-          <div className="text-2xl m-4  flex flex-row-reverse">
-            <button className="text-amber-500 mx-2" onClick={handleEdit}>
+          <div className="text-2xl m-4 text-right">
+            <button className="text-orange-500 mx-2" onClick={handleEdit}>
               <FaEdit />
             </button>
             <button className="text-rose-600 mx-2" onClick={handleDelete}>
@@ -72,21 +81,31 @@ function BlogPage() {
           {title}
         </h1>
         <div className=" my-12">
-          <div className="my-3 flex items-center space-x-2 cursor-pointer" onClick={handleAuthorClick}>
-            <div>
-              <img
-                src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
-                className="w-10 rounded-full"
-                alt="Avatar"
-              />
-            </div>
+          <div
+            className="my-3 flex items-center space-x-2 cursor-pointer"
+            onClick={handleAuthorClick}>
+            <img
+              src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
+              className="w-10 rounded-full"
+              alt="Avatar"
+            />
             <p className="font-Roboto text-zinc-700 text-lg">{author}</p>
           </div>
-          <p className="font-Roboto text-zinc-500 text-sm">{timePassed}</p>
+          <p className="font-Roboto text-zinc-500 text-sm">{timePassed} ago</p>
         </div>
+        <div className="text-zinc-950 text-lg" style={{ fontFamily: "Nunito" }}>
+          {summary}
+        </div>
+        {featuredImgName && (
+          <img
+            src={`${serverBaseUrl}/assets/featured/${featuredImgName}`}
+            className="block mx-auto my-8 w-full max-w-4xl object-cover"
+            alt="featured image"
+          />
+        )}
         <div
-          className="font-Roboto text-zinc-900 tracking-normal antialiased"
-          style={{ wordSpacing: "0.16em" }}
+          className="text-zinc-950 text-lg"
+          style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>

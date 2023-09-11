@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Dropzone from 'react-dropzone'
+// import Dropzone from "react-dropzone";
 import { setAuth } from "../features/auth/authSlice";
+import Dropzone from "../Components/Dropzone";
 
 function Login() {
   const [isLoginPage, setIsLoginPage] = useState(true);
@@ -11,8 +12,13 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const loginPageInitialValues = { email: "", password: "" }
-  const SignupPageInitialValues = { name: "", email: "", avatarImg: "", password: "" }
+  const loginPageInitialValues = { email: "", password: "" };
+  const SignupPageInitialValues = {
+    name: "",
+    email: "",
+    avatarImg: "",
+    password: "",
+  };
 
   const handleSubmit = async (values, actions) => {
     console.log(values);
@@ -39,9 +45,9 @@ function Login() {
       // This allows us to send form info with image
       const formData = new FormData();
       for (let value in values) {
-        formData.append(value, values[value])
+        formData.append(value, values[value]);
       }
-      formData.append("avatarImgName", values.avatarImg.name)
+      formData.append("avatarImgName", values.avatarImg.name);
       console.log(formData);
 
       const res = await fetch(signupApi, {
@@ -58,21 +64,6 @@ function Login() {
         console.log("wrong credentials");
       }
     }
-
-    // const res = await fetch(isLoginPage ? loginApi : signupApi, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(values),
-    // });
-    // console.log(res);
-    // if (res.ok) {
-    //   const data = await res.json();
-    //   dispatch(setAuth(data));
-    //   actions.setSubmitting(false);
-    //   navigate("/");
-    // } else {
-    //   console.log("wrong credentials");
-    // }
   };
 
   return (
@@ -81,10 +72,33 @@ function Login() {
         Insight Social
       </h1>
       <Formik
-        initialValues={isLoginPage?loginPageInitialValues:SignupPageInitialValues}
+        initialValues={
+          isLoginPage ? loginPageInitialValues : SignupPageInitialValues
+        }
         onSubmit={handleSubmit}>
         {(props) => (
-          <Form className="mt-28 flex flex-col items-center gap-6">
+          <Form className="mt-24 flex flex-col items-center gap-6">
+            {isLoginPage ? undefined : (
+              // <Dropzone
+              //   acceptedFile=".jpg,.jpeg,.png"
+              //   multiple={false}
+              //   onDrop={(acceptedFile) =>
+              //     // eslint-disable-next-line react/prop-types
+              //     props.setFieldValue("avatarImg", acceptedFile[0])
+              //   }>
+              //   {({ getRootProps, getInputProps }) => (
+              //     <section>
+              //       <div {...getRootProps()}>
+              //         <input {...getInputProps()} />
+              //         <p>
+              //           Drag & drop some files here, or click to select files
+              //         </p>
+              //       </div>
+              //     </section>
+              //   )}
+              // </Dropzone>
+              <Dropzone />
+            )}
             {isLoginPage ? undefined : (
               <Field
                 type="text"
@@ -92,26 +106,6 @@ function Login() {
                 placeholder="Full Name"
                 className="inputField"
               />
-            )}
-            {isLoginPage ? undefined : (
-              <Dropzone
-                acceptedFiles=".jpg,.jpeg,.png"
-                multiple={false}
-                onDrop={(acceptedFiles) =>
-                  // eslint-disable-next-line react/prop-types
-                  props.setFieldValue("avatarImg", acceptedFiles[0])
-                }>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <p>
-                        Drag & drop some files here, or click to select files
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
             )}
 
             <Field
@@ -126,7 +120,7 @@ function Login() {
               placeholder="password"
               className="inputField"
             />
-            <button type="submit" className="btn w-10/12 max-w-xl h-10">
+            <button type="submit" className="btn bg-zinc-950 text-white hover:bg-zinc-800  w-10/12 max-w-xl h-10">
               {isLoginPage ? "Login" : "Signup"}
             </button>
           </Form>

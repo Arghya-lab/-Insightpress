@@ -28,6 +28,10 @@ const BlogSchema = new mongoose.Schema({
     max: 100,
     required: true,
   },
+  featuredImgName:{
+    type: String,
+    default: "",
+  },
   content: {
     type: String,
     min: 1000,

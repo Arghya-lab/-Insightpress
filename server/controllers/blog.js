@@ -6,7 +6,7 @@ const User = require('../models/User')
 // Create
 const uploadBlog = async (req, res) => {
   try {
-    const { title, summary, content } = req.body
+    const { title, summary, featuredImgName, content } = req.body
     const { id } = req.user  // user data came via token
     const authorData = await User.findById(id) // user data come from user db
     const { _id ,name, avatarImgName, } = authorData
@@ -18,6 +18,7 @@ const uploadBlog = async (req, res) => {
       },
       title,
       summary,
+      featuredImgName,
       content,
     })
     res.status(200).json(blogData)
@@ -62,7 +63,7 @@ const updateBlog = async (req, res) => {
   try {
     const { id } = req.params // blog id
     const { userId } = await Blog.findById(id)
-    const { title, summary, content } = req.body
+    const { title, summary, featuredImgName, content } = req.body
     if (!userId) {
       res.status(400).json({"error": "Blog not found."})
 
@@ -70,7 +71,7 @@ const updateBlog = async (req, res) => {
     } else if(userId != req.user.id) {
       res.status(400).json({"error": "You are unauthorize to delete."})
     } else {
-      const blog = await Blog.findByIdAndUpdate(id, { title, summary, content })
+      const blog = await Blog.findByIdAndUpdate(id, { title, summary, featuredImgName, content })
       res.status(200).json(blog)
     }
   } catch (error) {

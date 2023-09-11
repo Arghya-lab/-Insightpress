@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import PostWidget from "../Components/PostWidget";
+import Dropzone from "../Components/Dropzone";
 
 function Home() {
-  const [blogs, setBlogs] = useState(null)
+  const [blogs, setBlogs] = useState(null);
   //  blogs includes =>  _id, authorData: { authorId, author, avatarImgName }, title, summary, content, createdAt, editedAt,  __v
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -12,8 +13,8 @@ function Home() {
   const fetchAllBlogs = async () => {
     try {
       const res = await fetch(allBlogsApi);
-      const data = await res.json()
-      setBlogs(data)
+      const data = await res.json();
+      setBlogs(data);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -22,12 +23,13 @@ function Home() {
 
   useEffect(() => {
     fetchAllBlogs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <Navbar />
+      <Dropzone />
       <div className="px-[calc((100vw-1280px)/2)]">
         {blogs &&
           blogs.map((blog) => (
@@ -37,11 +39,11 @@ function Home() {
               authorData={blog.authorData}
               title={blog.title}
               summary={blog.summary}
+              featuredImgName={blog.featuredImgName}
               content={blog.content}
               createdAt={blog.createdAt}
             />
-            ))
-          }
+          ))}
       </div>
     </>
   );
