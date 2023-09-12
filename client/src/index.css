@@ -40,6 +40,12 @@ body {
   }
 }
 
+@layer components {
+  .actionOverlayBtnContainer {
+    @apply flex justify-between items-center text-xl text-zinc-800 font-popins h-12 p-2 rounded-md cursor-pointer hover:bg-zinc-200;
+  }
+}
+
   /* for react quill editor */
 .ql-editor {
   font-family: Arial, Helvetica, sans-serif;

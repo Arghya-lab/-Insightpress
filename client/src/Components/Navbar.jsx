@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { setLogout } from "../features/auth/authSlice";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useEffect, useState } from "react";
-// import fetchAuthor from "../utils/fetchAuthor";
+import UserActionsOverlay from "./UserActionsOverlay";
 
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState(null)
-
+  const [isSlideOpen, setisSlideOpen] = useState(false)
+  
   const token = useSelector((state) => state.auth.token);
   const id = useSelector((state) => state.auth.id);
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
@@ -22,6 +23,12 @@ function Navbar() {
       navigate("/login");
     }
   };
+  
+
+  const handleSliderState = () => {
+    console.log("clicked");
+    setisSlideOpen(!isSlideOpen)
+  }
 
   useEffect(() => {
     const fetchAuthor = async () => {
@@ -39,8 +46,8 @@ function Navbar() {
     fetchAuthor()
   }, [])
   
-  return (
-    <div className="px-[calc((100vw-1280px)/2)] border-b-2 flexCenter">
+  return (<>
+    <div className="px-[calc((100vw-1280px)/2)] border-b-2 flexCenter ">
       <h1 className="text-zinc-900 font-KeenyaCoffee text-4xl m-4">
         Insight Social
       </h1>
@@ -62,13 +69,16 @@ function Navbar() {
         </button>
         {token ? (
           <img
+            className="w-10 h-10 rounded-full object-cover cursor-pointer"
             src={`${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`}
-            className="w-10 h-10 rounded-full object-cover"
             alt="Avatar"
+            onClick={handleSliderState}
           />
         ) : undefined}
       </div>
     </div>
+    <UserActionsOverlay isSidebarOpen={isSlideOpen} handleSliderState={handleSliderState} userData={userData} />
+    </>
   );
 }
 

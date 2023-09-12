@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import Navbar from "../Components/Navbar";
-import { FaEdit } from "react-icons/fa";
+import { MdEditNote } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
 import "@fontsource/nunito/400.css";
@@ -69,7 +69,7 @@ function BlogPage() {
         {isOwnBlog ? (
           <div className="text-2xl m-4 text-right">
             <button className="text-orange-500 mx-2" onClick={handleEdit}>
-              <FaEdit />
+              <MdEditNote />
             </button>
             <button className="text-rose-600 mx-2" onClick={handleDelete}>
               <MdDeleteForever />
