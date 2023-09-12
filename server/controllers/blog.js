@@ -52,7 +52,7 @@ const getBlogs = async(req, res) => {
 const getAuthorBlogs = async (req, res) => {
   try {
     const { id } = req.params  // author id || user id
-    const blogs = await Blog.find({userId: id})
+    const blogs = await Blog.find({'authorData.authorId': id})
     res.status(200).send(blogs)
   } catch (error) {
     res.status(400).json(error)
