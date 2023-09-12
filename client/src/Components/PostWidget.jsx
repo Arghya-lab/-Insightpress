@@ -51,7 +51,7 @@ function PostWidget({
         onClick={handleAuthorClick}>
         <img
           src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
-          className="w-7 rounded-full"
+          className="w-7 rounded-full aspect-square"
           alt="Avatar"
         />
         <p className="font-Roboto text-zinc-700 text-sm">{author}</p>

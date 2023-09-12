@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import PostWidget from "../Components/PostWidget";
-import Dropzone from "../Components/Dropzone";
 
 function Home() {
   const [blogs, setBlogs] = useState(null);
@@ -29,7 +28,6 @@ function Home() {
   return (
     <>
       <Navbar />
-      <Dropzone />
       <div className="px-[calc((100vw-1280px)/2)]">
         {blogs &&
           blogs.map((blog) => (
