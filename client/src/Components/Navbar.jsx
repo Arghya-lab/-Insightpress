@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogout } from "../features/auth/authSlice";
-import { HiOutlinePencilAlt } from "react-icons/hi";
+// import { setLogout } from "../features/auth/authSlice";
+// import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import UserActionsOverlay from "./UserActionsOverlay";
 
 function Navbar() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const [userData, setUserData] = useState(null)
   const [isSlideOpen, setIsSlideOpen] = useState(false)
   
@@ -15,14 +15,14 @@ function Navbar() {
   const id = useSelector((state) => state.auth.id);
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
-  const handleLoginLogout = () => {
-    if (token) {
-      dispatch(setLogout());
-      navigate("/");
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleLoginLogout = () => {
+  //   if (token) {
+  //     dispatch(setLogout());
+  //     navigate("/");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
   
 
   const handleSliderState = () => {
@@ -52,7 +52,7 @@ function Navbar() {
         Insight Social
       </h1>
       <div className="mx-4 flexCenter space-x-3">
-        {token ? (
+        {/* {token ? (
           <button
             type="button"
             className="btn bg-zinc-950 text-white hover:bg-zinc-800 flexCenter"
@@ -66,7 +66,7 @@ function Navbar() {
           className="btn bg-white text-zinc-900 hover:bg-zinc-200 "
           onClick={handleLoginLogout}>
           {token ? "Logout" : "Login"}
-        </button>
+        </button> */}
         {token ? (
           <img
             className="w-10 h-10 rounded-full object-cover cursor-pointer"
@@ -77,7 +77,7 @@ function Navbar() {
         ) : undefined}
       </div>
     </div>
-    <UserActionsOverlay isSidebarOpen={isSlideOpen} handleSliderState={handleSliderState} userData={userData} />
+    <UserActionsOverlay isSlideOpen={isSlideOpen} handleSliderState={handleSliderState} userData={userData} />
     </>
   );
 }
