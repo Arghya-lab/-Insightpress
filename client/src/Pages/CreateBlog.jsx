@@ -79,7 +79,6 @@ function CreateBlog() {
 
   useEffect(() => {
     setIsEditPage(location.state ? location.state.isEditPurpose : false);
-
   }, []);
 
   return (
@@ -104,7 +103,12 @@ function CreateBlog() {
               className="w-full px-4 h-10 border-2 border-zinc-400 text-zinc-600 text-base"
               style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
             />
-            <Dropzone isAvater={false} onDropzoneValue={handleDropzoneValue} />
+            {isEditPage ? undefined : (
+              <Dropzone
+                isAvater={false}
+                onDropzoneValue={handleDropzoneValue}
+              />
+            )}
             <Field type="text" name="content">
               {({
                 field, // { name, value, onChange }
