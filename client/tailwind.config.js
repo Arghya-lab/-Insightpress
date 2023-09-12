@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        KeenyaCoffee: ["Keenya Coffee Rg", ...defaultTheme.fontFamily.serif],
-        popins: ["Poppins", ...defaultTheme.fontFamily.serif],
+        KenyanCoffee: ["Kenyan Coffee Rg", ...defaultTheme.fontFamily.serif],
+        poppins: ["Poppins", ...defaultTheme.fontFamily.serif],
         Roboto: ["Roboto", ...defaultTheme.fontFamily.sans],
       },
     },

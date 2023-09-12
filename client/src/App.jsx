@@ -12,10 +12,11 @@ function App() {
   return (
     <div className="text-center font-serif font-medium">
       <Routes>
+        {/* No need of Auth */}
         <Route path="/" element={<Home />} />
         <Route path="Login" element={<Login />} />
         <Route path="blog/:id" element={<BlogPage />} />
-
+        {/* Need Auth */}
         {token ? <Route path="create" element={<CreateBlog />} /> : undefined}
         <Route path="author/:id" element={<AuthorPage />} />
       </Routes>

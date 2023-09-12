@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import "@fontsource/nunito/400.css";
 
 function BlogPage() {
-  const loginUserid = useSelector((state) => state.auth.id);
+  const loginUserId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function BlogPage() {
     content,
     createdAt,
   } = location.state;
-  const isOwnBlog = authorId === loginUserid;
+  const isOwnBlog = authorId === loginUserId;
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -55,7 +55,7 @@ function BlogPage() {
       headers: { "Content-Type": "application/json", "auth-token": token },
     });
     if (res.ok) {
-      console.log("Blog deleted sucessful");
+      console.log("Blog deleted successful");
       navigate("/");
     } else {
       console.log("wrong credentials");
@@ -76,7 +76,7 @@ function BlogPage() {
             </button>
           </div>
         ) : undefined}
-        <h1 className="font-popins text-4xl font-bold text-zinc-900">
+        <h1 className="font-poppins text-4xl font-bold text-zinc-900">
           {title}
         </h1>
         <div className="my-12">

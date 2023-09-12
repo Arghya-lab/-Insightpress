@@ -8,7 +8,7 @@ import {@fontsource/nunito/}
 
 @layer base {
   @font-face {
-    font-family: "Keenya Coffee Rg";
+    font-family: "Kenyan Coffee Rg";
     src: url("/assets/kenyan-coffee-rg.otf");
     font-weight: 500;
     font-style: normal;
@@ -30,7 +30,7 @@ body {
 
 @layer components {
   .inputField {
-    @apply w-10/12 max-w-xl h-10 px-4 border-2 border-zinc-500 font-popins rounded-md;
+    @apply w-10/12 max-w-xl h-10 px-4 border-2 border-zinc-500 font-poppins rounded-md;
   }
 }
 
@@ -42,7 +42,7 @@ body {
 
 @layer components {
   .actionOverlayBtnContainer {
-    @apply flex justify-between items-center text-xl text-zinc-800 font-popins h-12 p-2 rounded-md cursor-pointer hover:bg-zinc-200;
+    @apply flex justify-between items-center text-xl text-zinc-800 font-poppins h-12 p-2 rounded-md cursor-pointer hover:bg-zinc-200;
   }
 }
 

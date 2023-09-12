@@ -64,9 +64,9 @@ function AuthorPage() {
             className="block m-auto w-36 object-cover aspect-square rounded-full"
             src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
           />
-          <p className="my-6 font-popins text-lg font-semibold text-purple-950">{authorData?.name}</p>
+          <p className="my-6 font-poppins text-lg font-semibold text-purple-950">{authorData?.name}</p>
           {/* <p className="font-Roboto text-zinc-700">{authorData?.about}</p> */}
-        {/* add author followers, follow/unflow button */}
+        {/* add author followers, follow/unfollow button */}
         </div>
       </div>
     </div>

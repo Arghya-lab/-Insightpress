@@ -57,7 +57,7 @@ function PostWidget({
         <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
       </div>
       <div className="cursor-pointer" onClick={handleShowBlog}>
-        <p className="mb-1 font-popins text-xl font-semibold">{title}</p>
+        <p className="mb-1 font-poppins text-xl font-semibold">{title}</p>
         <p
           className=" text-zinc-700 leading-tight line-clamp-2"
           style={{ fontFamily: "Nunito", fontWeight: 600 }}>

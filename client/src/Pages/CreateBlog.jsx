@@ -51,7 +51,7 @@ function CreateBlog() {
       });
       if (res.ok) {
         actions.setSubmitting(false);
-        console.log("Blog uploaded sucessful");
+        console.log("Blog uploaded successful");
         navigate("/");
       } else {
         console.log("wrong credentials");
@@ -68,7 +68,7 @@ function CreateBlog() {
       console.log(res);
       if (res.ok) {
         actions.setSubmitting(false);
-        console.log("Blog Edited sucessful");
+        console.log("Blog Edited successful");
         navigate("/");
       } else {
         console.log("wrong credentials");
@@ -105,7 +105,7 @@ function CreateBlog() {
             />
             {isEditPage ? undefined : (
               <Dropzone
-                isAvater={false}
+                isAvatar={false}
                 onDropzoneValue={handleDropzoneValue}
               />
             )}

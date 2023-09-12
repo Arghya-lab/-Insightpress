@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 const baseStyle = {
   display: "flex",
   alignItems: "center",
-  justifycontent: "center",
+  justifyContent: "center",
   padding: "6px",
   borderWidth: 2,
   borderRadius: 6,
@@ -30,7 +30,7 @@ const rejectStyle = {
 
 function Dropzone(props) {
   // eslint-disable-next-line react/prop-types
-  const { onDropzoneValue, isAvater } = props;
+  const { onDropzoneValue, isAvatar } = props;
   const [file, setFile] = useState([]);
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
@@ -68,16 +68,16 @@ function Dropzone(props) {
   return (
     <div
       className={`container flex flex-col items-center space-y-4 ${
-        isAvater ? "w-10/12 max-w-xl" : "mx-auto my-8 w-full max-w-4xl"
+        isAvatar ? "w-10/12 max-w-xl" : "mx-auto my-8 w-full max-w-4xl"
       }`}>
       {file && (
         <div
-          className={`${isAvater ? "h-36 aspect-square" : ""}`}
+          className={`${isAvatar ? "h-36 aspect-square" : ""}`}
           key={file.name}>
           <img
             src={file.preview}
             className={`block h-full object-cover ${
-              isAvater ? "aspect-square rounded-full" : ""
+              isAvatar ? "aspect-square rounded-full" : ""
             }`}
             // Revoke data uri after image is loaded
             onLoad={() => {

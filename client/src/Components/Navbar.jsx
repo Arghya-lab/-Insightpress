@@ -9,7 +9,7 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState(null)
-  const [isSlideOpen, setisSlideOpen] = useState(false)
+  const [isSlideOpen, setIsSlideOpen] = useState(false)
   
   const token = useSelector((state) => state.auth.token);
   const id = useSelector((state) => state.auth.id);
@@ -27,7 +27,7 @@ function Navbar() {
 
   const handleSliderState = () => {
     console.log("clicked");
-    setisSlideOpen(!isSlideOpen)
+    setIsSlideOpen(!isSlideOpen)
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function Navbar() {
   
   return (<>
     <div className="px-[calc((100vw-1280px)/2)] border-b-2 flexCenter ">
-      <h1 className="text-zinc-900 font-KeenyaCoffee text-4xl m-4">
+      <h1 className="text-zinc-900 font-KenyanCoffee text-4xl m-4">
         Insight Social
       </h1>
       <div className="mx-4 flexCenter space-x-3">

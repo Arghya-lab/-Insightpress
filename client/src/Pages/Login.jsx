@@ -86,7 +86,7 @@ function Login() {
             isLoginPage ? "mt-24" : "mt-12"
           } flex flex-col items-center gap-6`}>
           {isLoginPage ? undefined : (
-            <Dropzone isAvater={true} onDropzoneValue={handleDropzoneValue} />
+            <Dropzone isAvatar={true} onDropzoneValue={handleDropzoneValue} />
           )}
           {isLoginPage ? undefined : (
             <Field
