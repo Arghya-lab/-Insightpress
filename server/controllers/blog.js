@@ -62,16 +62,16 @@ const getAuthorBlogs = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const { id } = req.params // blog id
-    const { userId } = await Blog.findById(id)
-    const { title, summary, featuredImgName, content } = req.body
-    if (!userId) {
+    const { authorData } = await Blog.findById(id)
+    const { title, summary, content } = req.body
+    if (!authorData) {
       res.status(400).json({"error": "Blog not found."})
 
       // req.user data came via token
-    } else if(userId != req.user.id) {
+    } else if(authorData.authorId != req.user.id) {
       res.status(400).json({"error": "You are unauthorize to delete."})
     } else {
-      const blog = await Blog.findByIdAndUpdate(id, { title, summary, featuredImgName, content })
+      const blog = await Blog.findByIdAndUpdate(id, { title, summary, content })
       res.status(200).json(blog)
     }
   } catch (error) {

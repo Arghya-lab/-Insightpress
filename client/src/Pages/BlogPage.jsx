@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
-import "@fontsource/nunito/";
+import "@fontsource/nunito/400.css";
 
 function BlogPage() {
   const loginUserid = useSelector((state) => state.auth.id);
@@ -44,7 +44,6 @@ function BlogPage() {
         blogId: id,
         title,
         summary,
-        featuredImgName,
         content,
       },
     });
@@ -80,13 +79,13 @@ function BlogPage() {
         <h1 className="font-popins text-4xl font-bold text-zinc-900">
           {title}
         </h1>
-        <div className=" my-12">
+        <div className="my-12">
           <div
             className="my-3 flex items-center space-x-2 cursor-pointer"
             onClick={handleAuthorClick}>
             <img
               src={`${serverBaseUrl}/assets/avatar/${avatarImgName}`}
-              className="w-10 rounded-full"
+              className="w-10 rounded-full aspect-square"
               alt="Avatar"
             />
             <p className="font-Roboto text-zinc-700 text-lg">{author}</p>
@@ -104,8 +103,8 @@ function BlogPage() {
           />
         )}
         <div
-          className="text-zinc-950 text-lg"
-          style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+        className="no-tailwind"
+          style={{ fontFamily: "Nunito", fontSize: "1.2rem" }}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>

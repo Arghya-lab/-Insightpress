@@ -17,7 +17,6 @@ function CreateBlog() {
   const token = useSelector((state) => state.auth.token);
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const blogSubmitApi = `${apiBaseUrl}/api/blog`;
 
   //  initial values for create blog form
   let title = "";
@@ -41,11 +40,11 @@ function CreateBlog() {
     for (const value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("featuredImg", featuredImg);
-    formData.append("featuredImgName", featuredImg.name);
 
     if (!isEditPage) {
-      const res = await fetch(blogSubmitApi, {
+      formData.append("featuredImg", featuredImg);
+      formData.append("featuredImgName", featuredImg.name);
+      const res = await fetch(`${apiBaseUrl}/api/blog`, {
         method: "POST",
         headers: { "auth-token": token },
         body: formData,
@@ -80,6 +79,7 @@ function CreateBlog() {
 
   useEffect(() => {
     setIsEditPage(location.state ? location.state.isEditPurpose : false);
+
   }, []);
 
   return (
