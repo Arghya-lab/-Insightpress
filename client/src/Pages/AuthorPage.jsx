@@ -4,7 +4,8 @@ import Navbar from "../Components/Navbar";
 import PostWidget from "../Components/PostWidget";
 
 function AuthorPage() {
-  const [blogs, setBlogs] = useState(null);
+  // blogs contains array of => {authorData: { authorId, author, avatarImgName }, content ,createdAt ,featuredImgName ,summary ,title ,updatedAt ,__v, _id}
+  const [blogs, setBlogs] = useState([]);
   const { id } = useParams();
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -28,15 +29,17 @@ function AuthorPage() {
   return (
     <div>
       <Navbar />
-      <div>
+      <div className="px-[calc((100vw-1280px)/2)]">
         {blogs &&
           blogs.map((blog) => (
             <PostWidget
               key={blog._id}
               id={blog._id}
-              author={blog.author}
+              authorData={blog.authorData}
               title={blog.title}
               summary={blog.summary}
+              featuredImgName={blog.featuredImgName}
+              content={blog.content}
               createdAt={blog.createdAt}
             />
           ))}

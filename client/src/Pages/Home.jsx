@@ -14,7 +14,6 @@ function Home() {
       const res = await fetch(allBlogsApi);
       const data = await res.json();
       setBlogs(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
