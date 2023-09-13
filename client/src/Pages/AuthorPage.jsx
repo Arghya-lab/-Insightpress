@@ -65,7 +65,7 @@ function AuthorPage() {
             src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
           />
           <p className="my-6 font-poppins text-lg font-semibold text-purple-950">{authorData?.name}</p>
-          {/* <p className="font-Roboto text-zinc-700">{authorData?.about}</p> */}
+          <p className="font-Roboto mx-10 text-zinc-700">{authorData?.bio}</p>
         {/* add author followers, follow/unfollow button */}
         </div>
       </div>
