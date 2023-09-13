@@ -9,13 +9,14 @@ const signupUser = async (req, res) => {
   // req.file is the `avatarImg` file
   try {
     // req.body will hold the text fields
-    const { name, email, avatarImgName, password } = req.body
+    const { name, email, avatarImgName, bio, password } = req.body
     const salt = bcrypt.genSaltSync(8);
     const hashPassword = bcrypt.hashSync(password, salt);
     const user = await User.create({
       name,
       email,
       avatarImgName,
+      bio,
       password: hashPassword,
     });
     const token = jwt.sign({ id: user._id, name: user.name, email }, jwtKey);

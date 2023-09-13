@@ -16,6 +16,7 @@ function Login() {
   const SignupPageInitialValues = {
     name: "",
     email: "",
+    bio: "",
     password: "",
   };
 
@@ -84,7 +85,7 @@ function Login() {
         <Form
           className={`${
             isLoginPage ? "mt-24" : "mt-12"
-          } flex flex-col items-center gap-6`}>
+          } flex flex-col items-center gap-5`}>
           {isLoginPage ? undefined : (
             <Dropzone isAvatar={true} onDropzoneValue={handleDropzoneValue} />
           )}
@@ -96,13 +97,21 @@ function Login() {
               className="inputField"
             />
           )}
-
           <Field
             type="email"
             name="email"
             placeholder="email"
             className="inputField"
           />
+          {isLoginPage ? undefined : (
+            <Field
+              type="text"
+              as="textarea"
+              name="bio"
+              placeholder="Write about yourself..."
+              className="inputField h-[68px] py-2"
+            />
+          )}
           <Field
             type="password"
             name="password"
@@ -119,7 +128,7 @@ function Login() {
       <button
         type="button"
         onClick={() => setIsLoginPage(!isLoginPage)}
-        className="mt-16 w-2/3 max-w-xl h-8 bg-transparent text-black hover:text-zinc-600 font-Roboto">
+        className="mt-12 w-2/3 max-w-xl h-8 bg-transparent text-black hover:text-zinc-600 font-Roboto">
         {isLoginPage
           ? "Don’t have an account? Join"
           : "Already have an account? Login"}
