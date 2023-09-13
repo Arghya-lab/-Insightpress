@@ -48,7 +48,7 @@ function Navbar() {
             src={
               token
                 ? `${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`
-                : "public/assets/profileIconDefault.png"
+                : "/public/assets/profileIconDefault.png"
             }
             alt="Avatar"
             onClick={handleSliderState}

@@ -34,7 +34,7 @@ function BlogPage() {
   });
 
   const handleAuthorClick = () => {
-    navigate(`author/${authorId}`);
+    navigate(`/author/${authorId}`);
   };
 
   const handleEdit = () => {
