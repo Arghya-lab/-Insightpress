@@ -1,9 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { parseISO, formatDistanceToNow } from "date-fns";
+import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../Components/Navbar";
+import { closeSlide } from "../features/info/infoSlice";
 import { MdEditNote } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
-import { useSelector } from "react-redux";
 import "@fontsource/nunito/400.css";
 
 function BlogPage() {
@@ -11,6 +12,7 @@ function BlogPage() {
   const token = useSelector((state) => state.auth.token);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
@@ -34,10 +36,12 @@ function BlogPage() {
   });
 
   const handleAuthorClick = () => {
+    dispatch(closeSlide());
     navigate(`/author/${authorId}`);
   };
 
   const handleEdit = () => {
+    dispatch(closeSlide());
     navigate("/create", {
       state: {
         isEditPurpose: true,
@@ -56,6 +60,7 @@ function BlogPage() {
     });
     if (res.ok) {
       console.log("Blog deleted successful");
+      dispatch(closeSlide());
       navigate("/");
     } else {
       console.log("wrong credentials");

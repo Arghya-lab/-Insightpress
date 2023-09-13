@@ -1,8 +1,7 @@
-// import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import UserActionsOverlay from "./UserActionsOverlay";
-import { toggleSlide } from "../features/info/infoSlice";
+import { openSlide } from "../features/info/infoSlice";
 
 function Navbar() {
   const [userData, setUserData] = useState(null);
@@ -15,7 +14,7 @@ function Navbar() {
 
   const handleSliderState = () => {
     console.log("clicked");
-    dispatch(toggleSlide());
+    dispatch(openSlide());
   };
 
   useEffect(() => {

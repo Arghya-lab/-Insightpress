@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { closeSlide } from "../features/info/infoSlice";
 import "@fontsource/nunito/600.css";
 
 function PostWidget({
@@ -11,8 +13,9 @@ function PostWidget({
   featuredImgName,
   content,
   createdAt,
-}) {
+  }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const { authorId, author, avatarImgName } = authorData;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
@@ -23,12 +26,14 @@ function PostWidget({
   });
 
   const handleAuthorClick = () => {
-    navigate(`author/${authorId}`);
+    dispatch(closeSlide())
+    navigate(`/author/${authorId}`);
   };
-
+  
   const handleShowBlog = async () => {
     try {
-      navigate(`blog/${id}`, {
+      dispatch(closeSlide())
+      navigate(`/blog/${id}`, {
         state: {
           id,
           authorData,

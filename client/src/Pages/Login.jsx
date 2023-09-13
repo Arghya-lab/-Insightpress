@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setAuth } from "../features/auth/authSlice";
 import Dropzone from "../Components/Dropzone";
+import { closeSlide } from "../features/info/infoSlice";
 
 function Login() {
   const [isLoginPage, setIsLoginPage] = useState(true);
@@ -41,6 +42,7 @@ function Login() {
         const data = await res.json();
         dispatch(setAuth(data));
         actions.setSubmitting(false);
+        dispatch(closeSlide());
         navigate("/");
       } else {
         console.log("wrong credentials");
@@ -65,6 +67,7 @@ function Login() {
         const data = await res.json();
         dispatch(setAuth(data));
         actions.setSubmitting(false);
+        dispatch(closeSlide());
         navigate("/");
       } else {
         console.log("wrong credentials");

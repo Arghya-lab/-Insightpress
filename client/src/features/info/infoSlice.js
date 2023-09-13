@@ -12,12 +12,15 @@ export const infoSlice = createSlice({
     changeMode: (state) => {
       state.isLightMode = !state.isLightMode
     },
-    toggleSlide: (state) => {
-      state.isSlideOpen = !state.isSlideOpen
+    openSlide: (state) => {
+      state.isSlideOpen = true
+    },
+    closeSlide: (state) => {
+      state.isSlideOpen = false
     },
   },
 })
 
-export const { changeMode, toggleSlide } = infoSlice.actions
+export const { changeMode, openSlide ,closeSlide } = infoSlice.actions
 
 export default infoSlice.reducer

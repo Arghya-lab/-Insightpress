@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../features/auth/authSlice";
+import { closeSlide } from "../features/info/infoSlice";
 import { RxCross2 } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
 import { GrUserSettings } from "react-icons/gr";
@@ -19,6 +20,7 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
   const handleLoginLogout = () => {
+    dispatch(closeSlide());
     if (token) {
       dispatch(setLogout());
       navigate("/");
@@ -32,7 +34,7 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
       className={`fixed top-0 right-[-100vw] sm:right-[-364px] w-[100vw] sm:w-[364px] h-full p-8 bg-zinc-100 ${
         isSlideOpen ? "shadow-none" : "shadow-zinc-950 shadow-xl"
       } rounded-bl-md rounded-tl-md flex flex-col justify-between transition-transform transform -translate-x-full ${
-        isSlideOpen ? "transform translate-x-0" : null
+        isSlideOpen ? undefined : "translate-x-0"
       }`}>
       <div>
         <div className="my-6 flex justify-between items-center">
@@ -56,7 +58,10 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
         </div>
         <div
           className="actionOverlayBtnContainer"
-          onClick={() => navigate("/")}>
+          onClick={() => {
+            dispatch(closeSlide());
+            navigate("/");
+          }}>
           <p>Home</p>
           <MdOutlineHome />
         </div>
@@ -64,7 +69,10 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
           <>
             <div
               className="actionOverlayBtnContainer"
-              onClick={() => navigate(`/author/${id}`)}>
+              onClick={() => {
+                dispatch(closeSlide());
+                navigate(`/author/${id}`);
+              }}>
               <p>Profile</p>
               <CgProfile />
             </div>
@@ -89,7 +97,10 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
             <button
               type="button"
               className="btn h-12 w-1/2 max-w-[252px] mx-auto bg-zinc-900 text-white hover:bg-zinc-800 flexCenter"
-              onClick={() => navigate("/create")}>
+              onClick={() => {
+                dispatch(closeSlide());
+                navigate("/create");
+              }}>
               Write
               <HiOutlinePencilAlt />
             </button>

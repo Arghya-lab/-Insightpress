@@ -3,15 +3,18 @@ import ReactQuill from "react-quill";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 import Navbar from "../Components/Navbar";
 import Dropzone from "../Components/Dropzone";
+import { closeSlide } from "../features/info/infoSlice";
 import EditorToolbar, { modules, formats } from "../Components/EditorToolbar";
 
 function CreateBlog() {
   const [isEditPage, setIsEditPage] = useState(false);
   const [featuredImg, setFeaturedImg] = useState(null);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const token = useSelector((state) => state.auth.token);
@@ -52,6 +55,7 @@ function CreateBlog() {
       if (res.ok) {
         actions.setSubmitting(false);
         console.log("Blog uploaded successful");
+        dispatch(closeSlide());
         navigate("/");
       } else {
         console.log("wrong credentials");
@@ -69,6 +73,7 @@ function CreateBlog() {
       if (res.ok) {
         actions.setSubmitting(false);
         console.log("Blog Edited successful");
+        dispatch(closeSlide());
         navigate("/");
       } else {
         console.log("wrong credentials");
