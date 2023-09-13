@@ -1,33 +1,21 @@
 // import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import { setLogout } from "../features/auth/authSlice";
-// import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import UserActionsOverlay from "./UserActionsOverlay";
+import { toggleSlide } from "../features/info/infoSlice";
 
 function Navbar() {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const [userData, setUserData] = useState(null)
-  const [isSlideOpen, setIsSlideOpen] = useState(false)
-  
+  const dispatch = useDispatch();
+
+  const isSlideOpen = useSelector((state) => state.info.isSlideOpen);
   const token = useSelector((state) => state.auth.token);
   const id = useSelector((state) => state.auth.id);
-  const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
-
-  // const handleLoginLogout = () => {
-  //   if (token) {
-  //     dispatch(setLogout());
-  //     navigate("/");
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
-  
+  const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;  
 
   const handleSliderState = () => {
     console.log("clicked");
-    setIsSlideOpen(!isSlideOpen)
+    dispatch(toggleSlide())
   }
 
   useEffect(() => {
@@ -52,21 +40,6 @@ function Navbar() {
         Insight Social
       </h1>
       <div className="mx-4 flexCenter space-x-3">
-        {/* {token ? (
-          <button
-            type="button"
-            className="btn bg-zinc-950 text-white hover:bg-zinc-800 flexCenter"
-            onClick={() => navigate("/create")}>
-            <HiOutlinePencilAlt />
-            Write
-          </button>
-        ) : undefined}
-        <button
-          type="button"
-          className="btn bg-white text-zinc-900 hover:bg-zinc-200 "
-          onClick={handleLoginLogout}>
-          {token ? "Logout" : "Login"}
-        </button> */}
         {token ? (
           <img
             className="w-10 h-10 rounded-full object-cover cursor-pointer"

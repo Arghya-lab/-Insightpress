@@ -6,7 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
 import { GrUserSettings } from "react-icons/gr";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import { IoLogOutOutline, IoLogInOutline, IoLogoGithub } from "react-icons/io5";
+import { IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
 import { MdOutlineHome, MdLightMode, MdModeNight } from "react-icons/md";
 import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
 
@@ -14,6 +14,7 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const id = useSelector((state) => state.auth.id);
 
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
@@ -28,18 +29,24 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
 
   return (
     <aside
-      className={`fixed top-0 right-[-100vw] sm:right-[-364px] w-[100vw] sm:w-[364px] h-full p-8 bg-zinc-100 ${isSlideOpen? "shadow-none":"shadow-zinc-950 shadow-xl"} rounded-bl-md rounded-tl-md flex flex-col justify-between transition-transform transform -translate-x-full ${
+      className={`fixed top-0 right-[-100vw] sm:right-[-364px] w-[100vw] sm:w-[364px] h-full p-8 bg-zinc-100 ${
+        isSlideOpen ? "shadow-none" : "shadow-zinc-950 shadow-xl"
+      } rounded-bl-md rounded-tl-md flex flex-col justify-between transition-transform transform -translate-x-full ${
         isSlideOpen ? "transform translate-x-0" : null
       }`}>
       <div>
         <div className="my-6 flex justify-between items-center">
           <div className="flex items-center space-x-3 font-semibold font-Roboto text-xl text-zinc-700">
-            <img
-              className="w-12 aspect-square rounded-full object-cover cursor-pointer"
-              src={`${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`}
-              alt="Avatar"
-            />
-            <p>{userData?.name}</p>
+            {token ? (
+              <>
+                <img
+                  className="w-12 aspect-square rounded-full object-cover"
+                  src={`${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`}
+                  alt="Avatar"
+                />
+                <p>{userData?.name}</p>
+              </>
+            ) : undefined}
           </div>
           <button
             className="px-4 h-12 rounded-md hover:bg-zinc-300"
@@ -47,23 +54,31 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
             <RxCross2 />
           </button>
         </div>
-        <div className="actionOverlayBtnContainer">
+        <div
+          className="actionOverlayBtnContainer"
+          onClick={() => navigate("/")}>
           <p>Home</p>
           <MdOutlineHome />
         </div>
-        <div className="actionOverlayBtnContainer">
-          <p>Profile</p>
-          <CgProfile />
-        </div>
-        <div className="actionOverlayBtnContainer">
-          <p>BookMarks</p>
-          <PiBookmarkSimpleLight />
-          {/* <PiBookmarkSimpleFill /> */}
-        </div>
-        <div className="actionOverlayBtnContainer">
-          <p>User Settings</p>
-          <GrUserSettings />
-        </div>
+        {token ? (
+          <>
+            <div
+              className="actionOverlayBtnContainer"
+              onClick={() => navigate(`/author/${id}`)}>
+              <p>Profile</p>
+              <CgProfile />
+            </div>
+            <div className="actionOverlayBtnContainer">
+              <p>BookMarks</p>
+              <PiBookmarkSimpleLight />
+              {/* <PiBookmarkSimpleFill /> */}
+            </div>
+            <div className="actionOverlayBtnContainer">
+              <p>User Settings</p>
+              <GrUserSettings />
+            </div>
+          </>
+        ) : undefined}
         <div className="actionOverlayBtnContainer">
           <p>Toggle Mode</p>
           <MdLightMode />
@@ -89,8 +104,17 @@ function UserActionsOverlay({ isSlideOpen, handleSliderState, userData }) {
           {token ? "Logout" : "Login"}
           {token ? <IoLogOutOutline /> : <IoLogInOutline />}
         </button>
-        <div className="font-serif"><span>&copy; {new Date().getFullYear()} Insightpress. Made with ♥️ ByArghya-lab</span><a href="https://github.com/Arghya-lab"> Visit : <span className="text-blue-400">Github</span></a></div></div>
-
+        <div className="font-serif">
+          <span>
+            &copy; {new Date().getFullYear()} Insightpress. Made with ♥️
+            ByArghya-lab
+          </span>
+          <a href="https://github.com/Arghya-lab">
+            {" "}
+            Visit : <span className="text-blue-400">Github</span>
+          </a>
+        </div>
+      </div>
     </aside>
   );
 }
