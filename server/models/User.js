@@ -27,7 +27,12 @@ const UserSchema = new mongoose.Schema({
     min: 6,
     required: true,
   },
-});
+  bookmarks: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Blog",
+    default: [],
+  },
+},{timestamps: true});
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
