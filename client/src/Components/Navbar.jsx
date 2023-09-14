@@ -12,10 +12,6 @@ function Navbar() {
   const id = useSelector((state) => state.auth.id);
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
-  const handleSliderState = () => {
-    console.log("clicked");
-    dispatch(openSlide());
-  };
 
   useEffect(() => {
     if (token) {
@@ -41,22 +37,21 @@ function Navbar() {
         <h1 className="text-zinc-900 font-KenyanCoffee text-4xl m-4">
           Insight Social
         </h1>
-        <div className="mx-4 flexCenter space-x-3">
+        <div className="mx-4 flexCenter space-x-3"
+            onClick={()=>dispatch(openSlide())}>
           <img
             className="w-10 h-10 rounded-full object-cover cursor-pointer"
             src={
               token
                 ? `${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`
-                : "/public/assets/profileIconDefault.png"
+                : "/assets/profileIconDefault.png"
             }
             alt="Avatar"
-            onClick={handleSliderState}
           />
         </div>
       </div>
       <UserActionsOverlay
-        isSlideOpen={isSlideOpen}
-        handleSliderState={handleSliderState}
+        key={isSlideOpen?"open":"close"}
         userData={userData}
       />
     </>
