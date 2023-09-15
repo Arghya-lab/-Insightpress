@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
+const mongoose = require('mongoose');
 
 const author = async (req, res) => {
   try {
@@ -18,34 +19,45 @@ const author = async (req, res) => {
 
 const toggleBookmark = async (req, res) => {
   try {
+    console.log(req.user.id);
     const { id } = req.params; // blog id
-    const blog = await Blog.findById(id);
-    
-    const removeBookmark = async(bookmarkId, idx, arr) => {
-      if (arr[idx] == bookmarkId) {
-        arr.splice(idx, 1);
-        return true;
-      } else {
-        return false;
-      }
-    };
+    let user = await User.findById(req.user.id);
+    const { bookmarks } = user
 
-    if (!blog) {
-      User.bookmarks.filter(removeBookmark);
-      res.status(400).json({ Error: "blog not found." });
+    let newBookmark = []
+    if (bookmarks.includes(id)) {
+      //  if blog id present
+      newBookmark = bookmarks.filter(bookmarkId => bookmarkId !== id)
     } else {
-      const user = await User.findById(req.user.id); // req.user data came via token
-      isBookmarked = user.bookmarks.includes((bookmarkId) => bookmarkId == id);
-      if (isBookmarked) {
-        user.bookmarks.filter(removeBookmark);
-      } else {
-        user.bookmarks.push(id);
-      }
+      //  if blog id not present
+      newBookmark = [...bookmarks, new mongoose.Types.ObjectId(id)]
     }
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark})
+
+    res.status(200).json(updatedUser.bookmarks);
   } catch (error) {
     res.status(400).json(error);
     console.log(error);
   }
 };
 
-module.exports = { author, toggleBookmark };
+const getBookmark = async (req, res) => {
+  try {
+    const { id } = req.user; // data came via token
+    const { bookmarks } = await User.findById(id);
+    if (bookmarks) {
+    let bookmarkBlogData = []
+    for (const bookmark of bookmarks) {
+      bookmarkBlogData.push(await Blog.findById(bookmark))
+    }
+    res.status(200).send(bookmarkBlogData)
+  } else {
+    res.status(400).json("no bookmark found")
+  }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+module.exports = { author, toggleBookmark, getBookmark };

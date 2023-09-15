@@ -1,7 +1,7 @@
 const express = require('express')
 const multer  = require('multer')
 const fetchUser = require('../middleware/fetchUser')
-const { uploadBlog, getSingleBlog ,getBlogs, getAuthorBlogs, updateBlog, deleteBlog } = require('../controllers/blog')
+const { uploadBlog, getSingleBlog, getBlogs, getAuthorBlogs, updateBlog, deleteBlog } = require('../controllers/blog')
 
 const router = express.Router()
 

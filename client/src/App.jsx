@@ -19,6 +19,7 @@ function App() {
         {/* Need Auth */}
         {token ? <Route path="create" element={<CreateBlog />} /> : undefined}
         <Route path="author/:id" element={<AuthorPage />} />
+        <Route path="bookmarks" element={<Home isBookmarkPage={true} />} />
       </Routes>
     </div>
   );

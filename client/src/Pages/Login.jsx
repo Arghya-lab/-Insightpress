@@ -40,6 +40,7 @@ function Login() {
       console.log(res);
       if (res.ok) {
         const data = await res.json();
+        console.log(data);
         dispatch(setAuth(data));
         actions.setSubmitting(false);
         dispatch(closeSlide());

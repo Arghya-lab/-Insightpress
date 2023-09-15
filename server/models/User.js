@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema({
   },
   bookmarks: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: "Blog",
     default: [],
   },
 },{timestamps: true});

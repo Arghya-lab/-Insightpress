@@ -18,6 +18,7 @@ const signupUser = async (req, res) => {
       avatarImgName,
       bio,
       password: hashPassword,
+      bookmarks: [],
     });
     const token = jwt.sign({ id: user._id, name: user.name, email }, jwtKey);
     res.status(200).send({ name: user.name, id: user._id, avatarImgName, token });
@@ -34,7 +35,7 @@ const loginUser = async (req, res) => {
     const isCorrectPass = bcrypt.compareSync(password, user.password);
     if (isCorrectPass) {
       const token = jwt.sign({  id: user._id, name: user.name, email }, jwtKey);
-      res.status(200).json({ name: user.name, id: user._id, token });
+      res.status(200).json({ name: user.name, id: user._id, bookmarks: user.bookmarks, token });
     } else {
       res.status(400).json("Incorrect credentials");
     }

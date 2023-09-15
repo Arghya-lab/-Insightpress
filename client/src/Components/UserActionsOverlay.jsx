@@ -30,7 +30,6 @@ function UserActionsOverlay({ userData }) {
       navigate("/login");
     }
   };
-  console.log(isSlideOpen);
 
   return (
     <aside
@@ -79,10 +78,14 @@ function UserActionsOverlay({ userData }) {
               <p>Profile</p>
               <CgProfile />
             </div>
-            <div className="actionOverlayBtnContainer">
+            <div
+              className="actionOverlayBtnContainer"
+              onClick={() => {
+                dispatch(closeSlide());
+                navigate("/bookmarks");
+              }}>
               <p>BookMarks</p>
               <PiBookmarkSimpleLight />
-              {/* <PiBookmarkSimpleFill /> */}
             </div>
             <div className="actionOverlayBtnContainer">
               <p>User Settings</p>
