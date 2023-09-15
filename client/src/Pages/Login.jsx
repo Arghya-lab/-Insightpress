@@ -49,8 +49,6 @@ function Login() {
         console.log("wrong credentials");
       }
     } else {
-      console.log(values);
-      console.log(avatarImg);
       // This allows us to send form info with image
       const formData = new FormData();
       for (let value in values) {

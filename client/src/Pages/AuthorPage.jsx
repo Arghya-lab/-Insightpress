@@ -14,36 +14,35 @@ function AuthorPage() {
   const authorBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
   const authorDataApi = `${apiBaseUrl}/api/author/${id}`;
 
-  const fetchAuthorData = async () => {
-    try {
-      const res = await fetch(authorDataApi);
-      const data = await res.json();
-      setAuthorData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchAllBlogs = async () => {
-    try {
-      const res = await fetch(authorBlogsApi);
-      const data = await res.json();
-      setBlogs(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchAuthorData = async () => {
+      try {
+        const res = await fetch(authorDataApi);
+        const data = await res.json();
+        setAuthorData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchAllBlogs = async () => {
+      try {
+        const res = await fetch(authorBlogsApi);
+        const data = await res.json();
+        setBlogs(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchAllBlogs();
     fetchAuthorData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [authorDataApi, authorBlogsApi]);
 
   return (
     <div>
       <Navbar />
-      <div className="px-[calc((100vw-1280px)/2)] flex">
+      <div className="px-[calc((100vw-1280px)/2)] flex justify-between">
         <div>
           {blogs &&
             blogs.map((blog) => (
@@ -64,9 +63,11 @@ function AuthorPage() {
             className="block m-auto w-36 object-cover aspect-square rounded-full"
             src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
           />
-          <p className="my-6 font-poppins text-lg font-semibold text-purple-950">{authorData?.name}</p>
+          <p className="my-6 font-poppins text-lg font-semibold text-purple-950">
+            {authorData?.name}
+          </p>
           <p className="font-Roboto mx-10 text-zinc-700">{authorData?.bio}</p>
-        {/* add author followers, follow/unfollow button */}
+          {/* add author followers, follow/unfollow button */}
         </div>
       </div>
     </div>

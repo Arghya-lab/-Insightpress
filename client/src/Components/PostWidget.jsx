@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeSlide } from "../features/info/infoSlice";
 import "@fontsource/nunito/600.css";
 import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
-import { setBookmarks } from "../features/auth/authSlice";
+import useToggleBookmark from "../hooks/useToggleBookmark";
 
 function PostWidget({
   id,
@@ -19,13 +18,11 @@ function PostWidget({
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-  const bookmarks = useSelector((state) => state.auth.bookmarks);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  
+  const [isBookmarked, doToggle] = useToggleBookmark(id)
 
   const { authorId, author, avatarImgName } = authorData;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -36,21 +33,6 @@ function PostWidget({
   const handleAuthorClick = () => {
     dispatch(closeSlide());
     navigate(`/author/${authorId}`);
-  };
-
-  const handleBookmark = async () => {
-    //  /api/author/bookmark/:id
-    const res = await fetch(`${apiBaseUrl}/api/author/bookmark/${id}`, {
-      method: "PATCH",
-      headers: { "auth-token": token },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(setBookmarks(data));
-      console.log(data);
-    } else {
-      console.log("Error occurred");
-    }
   };
 
   const handleShowBlog = async () => {
@@ -72,19 +54,6 @@ function PostWidget({
     }
   };
 
-  useEffect(() => {
-    if (bookmarks) {
-      for (const bookmark of bookmarks) {
-        if (bookmark == id) {
-          setIsBookmarked(true);
-          return;
-        }
-      }
-    }
-    setIsBookmarked(false);
-    return;
-  }, [bookmarks, id]);
-
   return (
     <div className="mx-2 p-3 max-w-4xl my-3 text-left border-[2px] rounded-lg shadow-md">
       <div className="flex justify-between items-center">
@@ -100,7 +69,7 @@ function PostWidget({
         </div>
         <div
           className="cursor-pointer hover:text-zinc-800"
-          onClick={handleBookmark}>
+          onClick={()=>doToggle()}>
           {isBookmarked ? <PiBookmarkSimpleFill /> : <PiBookmarkSimpleLight />}
         </div>
       </div>

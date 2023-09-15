@@ -9,7 +9,7 @@ import { GrUserSettings } from "react-icons/gr";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
 import { MdOutlineHome, MdLightMode, MdModeNight } from "react-icons/md";
-import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
+import { PiBookmarkSimpleLight } from "react-icons/pi";
 
 function UserActionsOverlay({ userData }) {
   const navigate = useNavigate();
