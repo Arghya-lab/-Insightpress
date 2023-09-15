@@ -9,6 +9,7 @@ function Home({ isBookmarkPage }) {
   //  blogs includes =>  _id, authorData: { authorId, author, avatarImgName }, title, summary, content, createdAt, editedAt,  __v
 
   const token = useSelector((state) => state.auth.token);
+  const bookmarks = useSelector((state) => state.auth.bookmarks);
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const fetchAllBlogs = async () => {
@@ -18,15 +19,13 @@ function Home({ isBookmarkPage }) {
         const data = await res.json();
         setBlogs(data);
       } else {
-        // Error coming
+        // if bookmarkPage
         const res = await fetch(`${apiBaseUrl}/api/author/bookmark`, {
           method: "POST",
           headers: { "auth-token": token },
         });
         const data = await res.json();
         setBlogs(data);
-        console.log(res);
-        console.log(data);
       }
     } catch (error) {
       console.log(error);
@@ -36,7 +35,7 @@ function Home({ isBookmarkPage }) {
   useEffect(() => {
     fetchAllBlogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBookmarkPage]);
+  }, [isBookmarkPage, bookmarks]);
 
   return (
     <>

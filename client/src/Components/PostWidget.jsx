@@ -16,12 +16,12 @@ function PostWidget({
   featuredImgName,
   content,
   createdAt,
-  }) {
+}) {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const bookmarks = useSelector((state)=>state.auth.bookmarks)
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
-  const [isBookmarked, setIsBookmarked] = useState(false)
+  const bookmarks = useSelector((state) => state.auth.bookmarks);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const { authorId, author, avatarImgName } = authorData;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
@@ -34,31 +34,28 @@ function PostWidget({
   });
 
   const handleAuthorClick = () => {
-    dispatch(closeSlide())
+    dispatch(closeSlide());
     navigate(`/author/${authorId}`);
   };
 
-  const handleBookmark = async() => {
+  const handleBookmark = async () => {
     //  /api/author/bookmark/:id
-    const res = await fetch(
-      `${apiBaseUrl}/api/author/bookmark/${id}`,
-      {
-        method: "PUT",
-        headers: { "auth-token": token },
-      }
-    );
+    const res = await fetch(`${apiBaseUrl}/api/author/bookmark/${id}`, {
+      method: "PATCH",
+      headers: { "auth-token": token },
+    });
     if (res.ok) {
-      const data = await res.json()
+      const data = await res.json();
       dispatch(setBookmarks(data));
       console.log(data);
     } else {
       console.log("Error occurred");
     }
-  }
-  
+  };
+
   const handleShowBlog = async () => {
     try {
-      dispatch(closeSlide())
+      dispatch(closeSlide());
       navigate(`/blog/${id}`, {
         state: {
           id,
@@ -76,17 +73,17 @@ function PostWidget({
   };
 
   useEffect(() => {
-    console.log(bookmarks);
     if (bookmarks) {
       for (const bookmark of bookmarks) {
         if (bookmark == id) {
-          setIsBookmarked(true)
-          return
+          setIsBookmarked(true);
+          return;
         }
       }
     }
-  }, [bookmarks])
-  
+    setIsBookmarked(false);
+    return;
+  }, [bookmarks, id]);
 
   return (
     <div className="mx-2 p-3 max-w-4xl my-3 text-left border-[2px] rounded-lg shadow-md">
@@ -101,8 +98,10 @@ function PostWidget({
           />
           <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
         </div>
-        <div className="cursor-pointer hover:text-zinc-800" onClick={handleBookmark}>
-          {isBookmarked?<PiBookmarkSimpleFill />:<PiBookmarkSimpleLight />}
+        <div
+          className="cursor-pointer hover:text-zinc-800"
+          onClick={handleBookmark}>
+          {isBookmarked ? <PiBookmarkSimpleFill /> : <PiBookmarkSimpleLight />}
         </div>
       </div>
       <div className="cursor-pointer" onClick={handleShowBlog}>

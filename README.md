@@ -13,10 +13,10 @@ Welcome to the Insightpress BlogApp repository! This project is a replica of the
 
 ## To Do
 
-- [x] Update, Delete blog futures.
+- [x] Update, Delete blog feature.
 - [x] Customize user profile with a bio and profile picture.
+- [x] add bookmark blog feature.
 - [ ] Enhance user profile page with additional customization options.
-- [ ] add bookmark blog feature.
 - [ ] Add social sharing functionality for articles.
 - [ ] ...
 
