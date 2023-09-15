@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   bookmarks: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: [],
     default: [],
   },
 },{timestamps: true});

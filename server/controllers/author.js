@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
-const mongoose = require('mongoose');
 
 const author = async (req, res) => {
   try {
@@ -17,12 +16,11 @@ const author = async (req, res) => {
   }
 };
 
-const toggleBookmark = async (req, res) => {
+const addRemoveBookmark = async (req, res) => {
   try {
     console.log(req.user.id);
     const { id } = req.params; // blog id
-    let user = await User.findById(req.user.id);
-    const { bookmarks } = user
+    const { bookmarks } = await User.findById(req.user.id); // req.user data came via token
 
     let newBookmark = []
     if (bookmarks.includes(id)) {
@@ -30,10 +28,10 @@ const toggleBookmark = async (req, res) => {
       newBookmark = bookmarks.filter(bookmarkId => bookmarkId !== id)
     } else {
       //  if blog id not present
-      newBookmark = [...bookmarks, new mongoose.Types.ObjectId(id)]
+      newBookmark = [...bookmarks, id]
     }
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark})
-
+    await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark})
+    const updatedUser = await User.findById(req.user.id);
     res.status(200).json(updatedUser.bookmarks);
   } catch (error) {
     res.status(400).json(error);
@@ -60,4 +58,4 @@ const getBookmark = async (req, res) => {
   }
 };
 
-module.exports = { author, toggleBookmark, getBookmark };
+module.exports = { author, addRemoveBookmark, getBookmark };
