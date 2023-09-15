@@ -67,11 +67,11 @@ function PostWidget({
           />
           <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
         </div>
-        <div
-          className="cursor-pointer hover:text-zinc-800"
+        <button
+          className="hover:text-zinc-800"
           onClick={()=>doToggle()}>
           {isBookmarked ? <PiBookmarkSimpleFill /> : <PiBookmarkSimpleLight />}
-        </div>
+        </button>
       </div>
       <div className="cursor-pointer" onClick={handleShowBlog}>
         <p className="mb-1 font-poppins text-xl font-semibold">{title}</p>

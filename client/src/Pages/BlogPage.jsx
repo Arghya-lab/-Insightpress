@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useSelector, useDispatch } from "react-redux";
+import useToggleBookmark from "../hooks/useToggleBookmark";
+import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
 import Navbar from "../Components/Navbar";
 import { closeSlide } from "../features/info/infoSlice";
 import { MdEditNote } from "react-icons/md";
@@ -28,6 +30,8 @@ function BlogPage() {
     createdAt,
   } = location.state;
   const isOwnBlog = authorId === loginUserId;
+
+  const [isBookmarked, doToggle] = useToggleBookmark(id);
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -71,20 +75,32 @@ function BlogPage() {
     <>
       <Navbar />
       <div className="px-[calc((100vw-1280px)/2)] my-8 mx-4 text-left">
-        {isOwnBlog ? (
-          <div className="text-2xl m-4 text-right">
-            <button className="text-orange-500 mx-2" onClick={handleEdit}>
-              <MdEditNote />
-            </button>
-            <button className="text-rose-600 mx-2" onClick={handleDelete}>
-              <MdDeleteForever />
-            </button>
-          </div>
-        ) : undefined}
+        <div className="text-2xl m-4 flex items-center justify-end">
+          {isOwnBlog ? (
+            <>
+              <button className="text-orange-500 mx-2" onClick={handleEdit}>
+                <MdEditNote />
+              </button>
+              <button className="text-rose-600 mx-2" onClick={handleDelete}>
+                <MdDeleteForever />
+              </button>
+            </>
+          ) : undefined}
+          <button className="hover:text-zinc-800" onClick={() => doToggle()}>
+            {isBookmarked ? (
+              <PiBookmarkSimpleFill />
+            ) : (
+              <PiBookmarkSimpleLight />
+            )}
+          </button>
+        </div>
         <h1 className="font-poppins text-4xl font-bold text-zinc-900">
           {title}
         </h1>
-        <div className="my-12">
+        <div className="my-2 text-zinc-950 text-xl" style={{ fontFamily: "Nunito" }}>
+          {summary}
+        </div>
+        <div className="my-10">
           <div
             className="my-3 flex items-center space-x-2 cursor-pointer"
             onClick={handleAuthorClick}>
@@ -97,9 +113,6 @@ function BlogPage() {
           </div>
           <p className="font-Roboto text-zinc-500 text-sm">{timePassed} ago</p>
         </div>
-        <div className="text-zinc-950 text-lg" style={{ fontFamily: "Nunito" }}>
-          {summary}
-        </div>
         {featuredImgName && (
           <img
             src={`${serverBaseUrl}/assets/featured/${featuredImgName}`}
@@ -108,7 +121,7 @@ function BlogPage() {
           />
         )}
         <div
-        className="no-tailwind"
+          className="no-tailwind"
           style={{ fontFamily: "Nunito", fontSize: "1.2rem" }}
           dangerouslySetInnerHTML={{ __html: content }}
         />
