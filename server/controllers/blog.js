@@ -83,12 +83,12 @@ const updateBlog = async (req, res) => {
 const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params // blog id
-    const { userId } = await Blog.findById(id)
-    if (!userId) {
+    const { authorData } = await Blog.findById(id)
+    if (!authorData) {
       res.status(400).json({"error": "Blog not found."})
       
       // req.user data came via token
-    } else if(userId != req.user.id) {
+    } else if(authorData.authorId != req.user.id) {
       res.status(400).json({"error": "You are unauthorize to delete."})
     } else {
       await Blog.findByIdAndDelete(id)
@@ -96,6 +96,7 @@ const deleteBlog = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json(error)
+    console.log(error);
   }
 }
 

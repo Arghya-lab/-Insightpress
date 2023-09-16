@@ -18,7 +18,6 @@ const author = async (req, res) => {
 
 const addRemoveBookmark = async (req, res) => {
   try {
-    console.log(req.user.id);
     const { id } = req.params; // blog id
     const { bookmarks } = await User.findById(req.user.id); // req.user data came via token
 
@@ -35,7 +34,6 @@ const addRemoveBookmark = async (req, res) => {
     res.status(200).json(updatedUser.bookmarks);
   } catch (error) {
     res.status(400).json(error);
-    console.log(error);
   }
 };
 
@@ -53,7 +51,6 @@ const getBookmark = async (req, res) => {
     res.status(400).json("no bookmark found")
   }
   } catch (error) {
-    console.log(error);
     res.status(400).json(error);
   }
 };
