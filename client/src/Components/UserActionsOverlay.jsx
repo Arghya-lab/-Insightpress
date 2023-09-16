@@ -87,7 +87,12 @@ function UserActionsOverlay({ userData }) {
               <p>BookMarks</p>
               <PiBookmarkSimpleLight />
             </div>
-            <div className="actionOverlayBtnContainer">
+            <div
+              className="actionOverlayBtnContainer"
+              onClick={() => {
+                dispatch(closeSlide());
+                // navigate("/bookmarks");  // add edit profile , edit ,delete blog feature
+              }}>
               <p>User Settings</p>
               <GrUserSettings />
             </div>

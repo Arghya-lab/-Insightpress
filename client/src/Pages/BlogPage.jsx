@@ -2,21 +2,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { parseISO, formatDistanceToNow } from "date-fns";
 import { useSelector, useDispatch } from "react-redux";
 import useToggleBookmark from "../hooks/useToggleBookmark";
+import useDeleteBlog from "../hooks/useDeleteBlog";
+import useEditBlog from "../hooks/useEditBlog";
 import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
 import Navbar from "../Components/Navbar";
 import { closeSlide } from "../features/info/infoSlice";
-import { MdEditNote } from "react-icons/md";
-import { MdDeleteForever } from "react-icons/md";
+import { MdEditNote, MdDeleteForever } from "react-icons/md";
 import "@fontsource/nunito/400.css";
 
 function BlogPage() {
   const loginUserId = useSelector((state) => state.auth.id);
-  const token = useSelector((state) => state.auth.token);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
   // location.state contains =>  id, authorData: {authorId, author, avatarImgName}, title, summary, createdAt
@@ -32,6 +31,8 @@ function BlogPage() {
   const isOwnBlog = authorId === loginUserId;
 
   const [isBookmarked, doToggle] = useToggleBookmark(id);
+  const deleteBlog = useDeleteBlog(id)
+  const editBlog = useEditBlog({ id, title, summary, content })
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -44,33 +45,6 @@ function BlogPage() {
     navigate(`/author/${authorId}`);
   };
 
-  const handleEdit = () => {
-    dispatch(closeSlide());
-    navigate("/create", {
-      state: {
-        isEditPurpose: true,
-        blogId: id,
-        title,
-        summary,
-        content,
-      },
-    });
-  };
-
-  const handleDelete = async () => {
-    const res = await fetch(`${apiBaseUrl}/api/blog/${id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json", "auth-token": token },
-    });
-    if (res.ok) {
-      console.log("Blog deleted successful");
-      dispatch(closeSlide());
-      navigate("/");
-    } else {
-      console.log("wrong credentials");
-    }
-  };
-
   return (
     <>
       <Navbar />
@@ -78,10 +52,10 @@ function BlogPage() {
         <div className="text-2xl m-4 flex items-center justify-end">
           {isOwnBlog ? (
             <>
-              <button className="text-orange-500 mx-2" onClick={handleEdit}>
+              <button className="text-orange-500 mx-2" onClick={()=>editBlog()}>
                 <MdEditNote />
               </button>
-              <button className="text-rose-600 mx-2" onClick={handleDelete}>
+              <button className="text-rose-600 mx-2" onClick={()=>deleteBlog()}>
                 <MdDeleteForever />
               </button>
             </>
