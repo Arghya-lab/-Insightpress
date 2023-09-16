@@ -61,7 +61,7 @@ function PostWidget({
   };
 
   return (
-    <div className="mx-2 p-3 max-w-4xl my-3 text-left border-[2px] rounded-lg shadow-md">
+    <div className="mx-4 p-3 max-w-4xl my-3 text-left border-[2px] rounded-lg shadow-md">
       <div className="flex justify-between items-center">
         <div
           className="mb-2 flex items-center space-x-2 cursor-pointer"
@@ -103,7 +103,9 @@ function PostWidget({
     </div>
   );
 }
-
+PostWidget.defaultProps = {
+  isOwnAuthorPage: false,
+}
 PostWidget.propTypes = {
   id: PropTypes.string.isRequired,
   authorData: PropTypes.object.isRequired,

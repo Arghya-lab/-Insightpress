@@ -1,5 +1,8 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
+const bcrypt = require("bcryptjs");
+
+const jwtKey = process.env.JWT_SECRET;
 
 const author = async (req, res) => {
   try {
@@ -16,20 +19,37 @@ const author = async (req, res) => {
   }
 };
 
+const editBio = async (req, res) => {
+  try {
+    const { id } = req.user; // req.user data came via token
+    const user = await User.findById(id);
+    if (!user) {
+      res.status(400).json({ Error: "User not found." });
+      return;
+    }
+    const { bio } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(id, { bio })
+    delete updatedUser.password
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 const addRemoveBookmark = async (req, res) => {
   try {
     const { id } = req.params; // blog id
     const { bookmarks } = await User.findById(req.user.id); // req.user data came via token
 
-    let newBookmark = []
+    let newBookmark = [];
     if (bookmarks.includes(id)) {
       //  if blog id present
-      newBookmark = bookmarks.filter(bookmarkId => bookmarkId !== id)
+      newBookmark = bookmarks.filter((bookmarkId) => bookmarkId !== id);
     } else {
       //  if blog id not present
-      newBookmark = [...bookmarks, id]
+      newBookmark = [...bookmarks, id];
     }
-    await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark})
+    await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark });
     const updatedUser = await User.findById(req.user.id);
     res.status(200).json(updatedUser.bookmarks);
   } catch (error) {
@@ -42,17 +62,17 @@ const getBookmark = async (req, res) => {
     const { id } = req.user; // data came via token
     const { bookmarks } = await User.findById(id);
     if (bookmarks) {
-    let bookmarkBlogData = []
-    for (const bookmark of bookmarks) {
-      bookmarkBlogData.push(await Blog.findById(bookmark))
+      let bookmarkBlogData = [];
+      for (const bookmark of bookmarks) {
+        bookmarkBlogData.push(await Blog.findById(bookmark));
+      }
+      res.status(200).json(bookmarkBlogData);
+    } else {
+      res.status(400).json("no bookmark found");
     }
-    res.status(200).send(bookmarkBlogData)
-  } else {
-    res.status(400).json("no bookmark found")
-  }
   } catch (error) {
     res.status(400).json(error);
   }
 };
 
-module.exports = { author, addRemoveBookmark, getBookmark };
+module.exports = { author, editBio, addRemoveBookmark, getBookmark };

@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import PostWidget from "../Components/PostWidget";
 import AuthorInfoWidget from "../Components/AuthorInfoWidget";
+import { useSelector } from "react-redux";
+import EditBioModal from "../Components/EditBioModal";
 
-function AuthorPage({ isOwnPage }) {
-  // blogs contains array of => _id, {authorData: { authorId, author, avatarImgName }, title, summary,  content, featuredImgName,  createdAt, updatedAt, __v}
+function AuthorPage() {
   const [blogs, setBlogs] = useState([]);
-  const [authorData, setAuthorData] = useState(null);
+  // blogs contains array of => _id, {authorData: { authorId, author, avatarImgName }, title, summary,  content, featuredImgName,  createdAt, updatedAt, __v}
+  const [fullAuthorData, setFullAuthorData] = useState({});
+  //  fullAuthorData contains =>  _id, name, email, avatarImgName, bio, bookmarks, createdAt, updatedAt, __v
   const { id } = useParams();
 
-  // const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
+
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const authorBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
   const authorDataApi = `${apiBaseUrl}/api/author/${id}`;
@@ -21,7 +26,7 @@ function AuthorPage({ isOwnPage }) {
       try {
         const res = await fetch(authorDataApi);
         const data = await res.json();
-        setAuthorData(data);
+        setFullAuthorData(data);
       } catch (error) {
         console.log(error);
       }
@@ -39,12 +44,12 @@ function AuthorPage({ isOwnPage }) {
 
     fetchAllBlogs();
     fetchAuthorData();
-  }, [authorDataApi, authorBlogsApi]);
+  }, [id, fullAuthorData]);
 
   return (
     <div>
       <Navbar />
-      <div className="px-[calc((100vw-1280px)/2)] flex justify-between">
+      <div className="px-[calc((100vw-1280px)/2)] flex flex-col-reverse md:flex-row items-center md:items-start justify-between">
         <div>
           {blogs &&
             blogs.map((blog) => (
@@ -57,32 +62,22 @@ function AuthorPage({ isOwnPage }) {
                 featuredImgName={blog.featuredImgName}
                 content={blog.content}
                 createdAt={blog.createdAt}
-                isOwnAuthorPage={isOwnPage}
+                isOwnAuthorPage={blog.authorData.authorId === userId}
               />
             ))}
         </div>
-        <AuthorInfoWidget authorData={authorData} />
-        {/* <div className="w-[425px] m-4 p-4 border-[2px] rounded-lg shadow-md">
-          <img
-            className="block m-auto w-36 object-cover aspect-square rounded-full"
-            src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
-          />
-          <p className="my-6 font-poppins text-lg font-semibold text-purple-950">
-            {authorData?.name}
-          </p>
-          <p className="font-Roboto mx-10 text-zinc-700">{authorData?.bio}</p>
-          add author followers, follow/unfollow button
-        </div> */}
+        <AuthorInfoWidget authorData={fullAuthorData} />
+        {token ? <EditBioModal authorData={fullAuthorData} /> : undefined}
       </div>
     </div>
   );
 }
 
 AuthorPage.defaultProp = {
-  isOwnPage: false
-}
+  isOwnPage: false,
+};
 AuthorPage.propTypes = {
-  isOwnPage: PropTypes.bool
-}
+  isOwnPage: PropTypes.bool,
+};
 
 export default AuthorPage;

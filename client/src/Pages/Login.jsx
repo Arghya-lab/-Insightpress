@@ -26,7 +26,6 @@ function Login() {
   };
 
   const handleSubmit = async (values, actions) => {
-    console.log(values);
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     const signupApi = `${apiBaseUrl}/api/auth/signup`;
     const loginApi = `${apiBaseUrl}/api/auth/login`;
@@ -37,7 +36,6 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      console.log(res);
       if (res.ok) {
         const data = await res.json();
         console.log(data);
