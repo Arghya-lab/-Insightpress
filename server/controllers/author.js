@@ -1,9 +1,7 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
-const bcrypt = require("bcryptjs");
 
-const jwtKey = process.env.JWT_SECRET;
-
+/* READ AUTHOR DATA */
 const author = async (req, res) => {
   try {
     const { id } = req.params; // author id
@@ -19,6 +17,7 @@ const author = async (req, res) => {
   }
 };
 
+/* UPDATE USER BIO */
 const editBio = async (req, res) => {
   try {
     const { id } = req.user; // req.user data came via token
@@ -28,28 +27,29 @@ const editBio = async (req, res) => {
       return;
     }
     const { bio } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(id, { bio })
-    delete updatedUser.password
+    const updatedUser = await User.findByIdAndUpdate(id, { bio });
+    delete updatedUser.password;
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(400).json(error);
   }
 };
 
+/* READ, UPDATE BOOKMARK */
 const addRemoveBookmark = async (req, res) => {
   try {
     const { id } = req.params; // blog id
     const { bookmarks } = await User.findById(req.user.id); // req.user data came via token
 
-    let newBookmark = [];
+    let newBookmarks = [];
     if (bookmarks.includes(id)) {
       //  if blog id present
-      newBookmark = bookmarks.filter((bookmarkId) => bookmarkId !== id);
+      newBookmarks = bookmarks.filter((bookmarkId) => bookmarkId !== id);
     } else {
       //  if blog id not present
-      newBookmark = [...bookmarks, id];
+      newBookmarks = [...bookmarks, id];
     }
-    await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmark });
+    await User.findByIdAndUpdate(req.user.id, { bookmarks: newBookmarks });
     const updatedUser = await User.findById(req.user.id);
     res.status(200).json(updatedUser.bookmarks);
   } catch (error) {
@@ -75,4 +75,47 @@ const getBookmark = async (req, res) => {
   }
 };
 
-module.exports = { author, editBio, addRemoveBookmark, getBookmark };
+/* UPDATE FOLLOWER & READ FOLLOWER POST */
+const addRemoveAuthor = async (req, res) => {
+  try {
+    const { id } = req.params; // author id
+    const { following } = await User.findById(req.user.id); // req.user data came via token
+
+    let newFollowing = [];
+    if (following.includes(id)) {
+      //  if author id present
+      newFollowing = following.filter((followingId) => followingId !== id);
+    } else {
+      //  if author id not present
+      newFollowing = [...following, id];
+    }
+    await User.findByIdAndUpdate(req.user.id, { following: newFollowing });
+
+    const updatedUser = await User.findById(req.user.id);
+    res.status(200).json(updatedUser.following);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+const getFollowingFeed = async (req, res) => {
+  try {
+    const { following } = await User.findById(req.user.id); // req.user data came via token
+    const followingAuthorBlogs = await
+    Blog.find({ "authorData.authorId": { $in: following }, }) // finding blogs that are contains authorId any one of following users
+    .sort({ createdAt: "desc" })  // Sort by createdAt in descending order
+    .limit(10)
+    
+    res.status(200).json(followingAuthorBlogs);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+module.exports = {
+  author,
+  editBio,
+  addRemoveBookmark,
+  getBookmark,
+  addRemoveAuthor,
+  getFollowingFeed,
+};

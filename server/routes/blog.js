@@ -16,22 +16,23 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-
+/* CREATE BLOG */
 // posting a new blog using : POST /api/blog  => token require
 router.post("/", upload.single("featuredImg"), fetchUser, uploadBlog)
 
+/* READ BLOG */
 // get a blog using : GET /api/blog/:id
 router.get("/:id", getSingleBlog)
-
 // get all blogs using : GET /api/blog
 router.get("/", getBlogs)
-
 // get all blogs of a author using : GET /api/blog/author/:id
 router.get("/author/:id", getAuthorBlogs)
 
+/* UPDATE BLOG */
 // update a blog using : PUT /api/blog/:id  => token require
 router.put("/:id", upload.single("featuredImg"), fetchUser, updateBlog)
 
+/* DELETE BLOG */
 // delete a blog using : DELETE /api/blog/:id  => token require
 router.delete("/:id", fetchUser, deleteBlog)
 

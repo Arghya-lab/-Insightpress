@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
     type: [],
     default: [],
   },
+  following: {
+    type: [],
+    default: [],
+  },
 },{timestamps: true});
 
 const User = mongoose.model("User", UserSchema);
