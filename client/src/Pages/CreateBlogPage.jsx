@@ -10,7 +10,7 @@ import Dropzone from "../Components/Dropzone";
 import { closeSlide } from "../features/info/infoSlice";
 import EditorToolbar, { modules, formats } from "../Components/EditorToolbar";
 
-function CreateBlog() {
+function CreateBlogPage() {
   const [isEditPage, setIsEditPage] = useState(false);
   const [featuredImg, setFeaturedImg] = useState(null);
 
@@ -144,4 +144,4 @@ function CreateBlog() {
   );
 }
 
-export default CreateBlog;
+export default CreateBlogPage;

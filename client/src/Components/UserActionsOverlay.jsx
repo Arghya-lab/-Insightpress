@@ -73,6 +73,15 @@ function UserActionsOverlay({ userData }) {
               className="actionOverlayBtnContainer"
               onClick={() => {
                 dispatch(closeSlide());
+                navigate(`/feedForMe`);
+              }}>
+              <p>For You</p>
+              <GrUserSettings />
+            </div>
+            <div
+              className="actionOverlayBtnContainer"
+              onClick={() => {
+                dispatch(closeSlide());
                 navigate(`/author/${id}`);
               }}>
               <p>Profile</p>
@@ -86,15 +95,6 @@ function UserActionsOverlay({ userData }) {
               }}>
               <p>BookMarks</p>
               <PiBookmarkSimpleLight />
-            </div>
-            <div
-              className="actionOverlayBtnContainer"
-              onClick={() => {
-                dispatch(closeSlide());
-                // navigate("/bookmarks");  // add edit profile , edit ,delete blog feature
-              }}>
-              <p>User Settings</p>
-              <GrUserSettings />
             </div>
           </>
         ) : undefined}

@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Home from "./pages/Home";
-import Login from "./Pages/Login";
+import HomePage from "./Pages/HomePage";
+import LoginPage from "./Pages/LoginPage";
 import BlogPage from "./Pages/BlogPage";
 import AuthorPage from "./Pages/AuthorPage";
-import CreateBlog from "./Pages/CreateBlog";
+import CreateBlogPage from "./Pages/CreateBlogPage";
+import BookmarkPage from "./Pages/BookmarkPage";
+import FeedForMePage from "./Pages/FeedForMePage";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -13,13 +15,16 @@ function App() {
     <div className="text-center font-serif font-medium">
       <Routes>
         {/* No need of Auth */}
-        <Route path="/" element={<Home />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="Login" element={<LoginPage />} />
         <Route path="blog/:id" element={<BlogPage />} />
         {/* Need Auth */}
-        {token ? <Route path="create" element={<CreateBlog />} /> : undefined}
+        {token ? (
+          <Route path="create" element={<CreateBlogPage />} />
+        ) : undefined}
         <Route path="author/:id" element={<AuthorPage />} />
-        <Route path="bookmarks" element={<Home isBookmarkPage={true} />} />
+        <Route path="bookmarks" element={<BookmarkPage />} />
+        <Route path="feedForMe" element={<FeedForMePage />} />
       </Routes>
     </div>
   );

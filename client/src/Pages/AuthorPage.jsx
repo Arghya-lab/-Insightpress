@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import PostWidget from "../Components/PostWidget";
 import AuthorInfoWidget from "../Components/AuthorInfoWidget";
 import { useSelector } from "react-redux";
 import EditBioModal from "../Components/EditBioModal";
+import FeedContainer from "../Components/FeedContainer";
 
 function AuthorPage() {
   const [blogs, setBlogs] = useState([]);
   // blogs contains array of => _id, {authorData: { authorId, author, avatarImgName }, title, summary,  content, featuredImgName,  createdAt, updatedAt, __v}
   const [fullAuthorData, setFullAuthorData] = useState({});
   //  fullAuthorData contains =>  _id, name, email, avatarImgName, bio, bookmarks, createdAt, updatedAt, __v
+  const [isOwnPage, setIsOwnPage] = useState(false);
   const { id } = useParams();
-
-  const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
+  const authorId = useSelector((state) => state.auth.id);
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const authorBlogsApi = `${apiBaseUrl}/api/blog/author/${id}`;
@@ -44,40 +43,27 @@ function AuthorPage() {
 
     fetchAllBlogs();
     fetchAuthorData();
-  }, [id, fullAuthorData]);
+  }, [authorBlogsApi, authorDataApi]);
+
+  useEffect(() => {
+    if (fullAuthorData._id == authorId) {
+      setIsOwnPage(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fullAuthorData]);
 
   return (
     <div>
       <Navbar />
-      <div className="px-[calc((100vw-1280px)/2)] flex flex-col-reverse md:flex-row items-center md:items-start justify-between">
+      <div className="px-[calc((100vw-1280px)/2)] flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between">
         <div>
-          {blogs &&
-            blogs.map((blog) => (
-              <PostWidget
-                key={blog._id}
-                id={blog._id}
-                authorData={blog.authorData}
-                title={blog.title}
-                summary={blog.summary}
-                featuredImgName={blog.featuredImgName}
-                content={blog.content}
-                createdAt={blog.createdAt}
-                isOwnAuthorPage={blog.authorData.authorId === userId}
-              />
-            ))}
+          <FeedContainer blogs={blogs} isOwnPage={isOwnPage} />
         </div>
-        <AuthorInfoWidget authorData={fullAuthorData} />
         {token ? <EditBioModal authorData={fullAuthorData} /> : undefined}
+        <AuthorInfoWidget authorData={fullAuthorData} />
       </div>
     </div>
   );
 }
-
-AuthorPage.defaultProp = {
-  isOwnPage: false,
-};
-AuthorPage.propTypes = {
-  isOwnPage: PropTypes.bool,
-};
 
 export default AuthorPage;

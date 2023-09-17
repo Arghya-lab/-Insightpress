@@ -6,7 +6,7 @@ import { setAuth } from "../features/auth/authSlice";
 import Dropzone from "../Components/Dropzone";
 import { closeSlide } from "../features/info/infoSlice";
 
-function Login() {
+function LoginPage() {
   const [isLoginPage, setIsLoginPage] = useState(true);
   const [avatarImg, setAvatarImg] = useState(null);
 
@@ -137,4 +137,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

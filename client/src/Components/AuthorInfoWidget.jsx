@@ -1,21 +1,18 @@
 import PropType from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../features/info/infoSlice";
+import useFollowUnfollowFriend from "../hooks/useFollowUnfollowFriend";
+import { SlUserFollow, SlUserUnfollow } from "react-icons/sl";
 
 function AuthorInfoWidget({ authorData }) {
   //  fullAuthorData contains =>  _id, name, email, avatarImgName, bio, bookmarks, createdAt, updatedAt, __v
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [isFollowing, followUnfollowFriend] = useFollowUnfollowFriend(authorData._id);
 
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
   const isOwnAuthorPage = authorData._id === userId;
-
-  const handleFollow = () => {
-    console.log("profile following");
-    console.log(authorData, userId);
-  };
-  
 
   return (
     <div className="w-[94%] sm:w-[425px] m-4 p-4 border-[2px] rounded-lg shadow-md ">
@@ -31,17 +28,16 @@ function AuthorInfoWidget({ authorData }) {
         <button
           type="button"
           className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 text-zinc-900 hover:bg-zinc-300 flex items-center justify-around"
-          onClick={()=>dispatch(openModal())}>
+          onClick={() => dispatch(openModal())}>
           Edit Bio
         </button>
       ) : token ? (
         <button
           type="button"
           className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 text-zinc-900 hover:bg-zinc-300 flex items-center justify-around"
-          onClick={handleFollow}>
-          Follow
-          {/* {isFollowing ? "Unfollow" : "Follow"}
-            {isFollowing ? <IoLogOutOutline /> : <IoLogInOutline />} */}
+          onClick={() => followUnfollowFriend()}>
+          {isFollowing ? "Unfollow" : "Follow"}
+          {isFollowing ? <SlUserUnfollow /> : <SlUserFollow />}
           {/* add author followers */}
         </button>
       ) : undefined}

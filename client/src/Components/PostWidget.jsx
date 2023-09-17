@@ -18,14 +18,14 @@ function PostWidget({
   featuredImgName,
   content,
   createdAt,
-  isOwnAuthorPage,
+  isOwnPage,
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const [isBookmarked, doToggle] = useToggleBookmark(id)
-  const deleteBlog = useDeleteBlog(id)
-  const editBlog = useEditBlog({ id, title, summary, content })
+
+  const [isBookmarked, doToggle] = useToggleBookmark(id);
+  const deleteBlog = useDeleteBlog(id);
+  const editBlog = useEditBlog({ id, title, summary, content });
 
   const { authorId, author, avatarImgName } = authorData;
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
@@ -74,20 +74,26 @@ function PostWidget({
           <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
         </div>
         <div>
-          {isOwnAuthorPage ? (
+          {isOwnPage ? (
             <>
-              <button className="text-orange-500 mx-2" onClick={()=>editBlog()}>
+              <button
+                className="text-orange-500 mx-2"
+                onClick={() => editBlog()}>
                 <MdEditNote />
               </button>
-              <button className="text-rose-600 mx-2" onClick={()=>deleteBlog()}>
+              <button
+                className="text-rose-600 mx-2"
+                onClick={() => deleteBlog()}>
                 <MdDeleteForever />
               </button>
             </>
           ) : undefined}
-          <button
-            className="hover:text-zinc-800"
-            onClick={()=>doToggle()}>
-            {isBookmarked ? <PiBookmarkSimpleFill /> : <PiBookmarkSimpleLight />}
+          <button className="hover:text-zinc-800" onClick={() => doToggle()}>
+            {isBookmarked ? (
+              <PiBookmarkSimpleFill />
+            ) : (
+              <PiBookmarkSimpleLight />
+            )}
           </button>
         </div>
       </div>
@@ -104,8 +110,8 @@ function PostWidget({
   );
 }
 PostWidget.defaultProps = {
-  isOwnAuthorPage: false,
-}
+  isOwnPage: false,
+};
 PostWidget.propTypes = {
   id: PropTypes.string.isRequired,
   authorData: PropTypes.object.isRequired,
@@ -114,7 +120,7 @@ PostWidget.propTypes = {
   featuredImgName: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  isOwnAuthorPage: PropTypes.bool.isRequired,
+  isOwnPage: PropTypes.bool.isRequired,
 };
 
 export default PostWidget;
