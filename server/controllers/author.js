@@ -62,6 +62,7 @@ const getBookmark = async (req, res) => {
     const { id } = req.user; // data came via token
     const { bookmarks } = await User.findById(id);
     if (bookmarks) {
+      //  optimize this
       let bookmarkBlogData = [];
       for (const bookmark of bookmarks) {
         bookmarkBlogData.push(await Blog.findById(bookmark));
@@ -102,9 +103,9 @@ const getFollowingFeed = async (req, res) => {
   try {
     const { following } = await User.findById(req.user.id); // req.user data came via token
     const followingAuthorBlogs = await
-    Blog.find({ "authorData.authorId": { $in: following }, }) // finding blogs that are contains authorId any one of following users
+    Blog.find({ "authorData.authorId": { $in: following } }) // finding blogs that are contains authorId any one of following users
     .sort({ createdAt: "desc" })  // Sort by createdAt in descending order
-    .limit(10)
+    .limit(7)
     
     res.status(200).json(followingAuthorBlogs);
   } catch (error) {

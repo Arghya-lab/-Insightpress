@@ -45,8 +45,10 @@ function CreateBlogPage() {
     }
 
     if (!isEditPage) {
-      formData.append("featuredImg", featuredImg);
-      formData.append("featuredImgName", featuredImg.name);
+      if (featuredImg) {
+        formData.append("featuredImg", featuredImg);
+        formData.append("featuredImgName", featuredImg.name);
+      }
       const res = await fetch(`${apiBaseUrl}/api/blog`, {
         method: "POST",
         headers: { "auth-token": token },
@@ -69,7 +71,6 @@ function CreateBlogPage() {
           body: formData,
         }
       );
-      console.log(res);
       if (res.ok) {
         actions.setSubmitting(false);
         console.log("Blog Edited successful");

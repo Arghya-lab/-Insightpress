@@ -3,7 +3,7 @@ const User = require('../models/User')
 // const {  id, name, email } = req.user  // user data came via token
 
 
-// Create
+/* Create */
 const uploadBlog = async (req, res) => {
   try {
     const { title, summary, featuredImgName, content } = req.body
@@ -28,7 +28,7 @@ const uploadBlog = async (req, res) => {
   }
 }
 
-// Read
+/* Read */
 const getSingleBlog = async(req, res) => {
   try {
     const { id } = req.params // blog id
@@ -41,9 +41,11 @@ const getSingleBlog = async(req, res) => {
 
 const getBlogs = async(req, res) => {
   try {
-    const blogsData = await Blog.find().sort({createdAt: "desc"}).limit(10)
-    
-    res.status(200).json(blogsData)
+    const pageNo = req.query.page
+    const data = await Blog.find().sort({createdAt: "desc"}).skip(pageNo*7).limit(7)
+    const totalBlogs = (await Blog.find()).length
+
+    res.status(200).json({ data, totalBlogs})
   } catch (error) {
     res.status(400).json(error)
   }
@@ -52,13 +54,17 @@ const getBlogs = async(req, res) => {
 const getAuthorBlogs = async (req, res) => {
   try {
     const { id } = req.params  // author id || user id
-    const blogs = await Blog.find({'authorData.authorId': id})
-    res.status(200).send(blogs)
+    const pageNo = req.query.page
+    const blogsData = await Blog.find({'authorData.authorId': id}).sort({createdAt: "desc"}).skip(pageNo*7).limit(7)
+    const totalBlogs = (await Blog.find({'authorData.authorId': id})).length
+
+    res.status(200).json({ blogsData, totalBlogs})
   } catch (error) {
     res.status(400).json(error)
   }
 }
 
+/* Update */
 const updateBlog = async (req, res) => {
   try {
     const { id } = req.params // blog id
@@ -80,6 +86,7 @@ const updateBlog = async (req, res) => {
   }
 }
 
+/* Delete */
 const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params // blog id
