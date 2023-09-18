@@ -23,9 +23,9 @@ router.post("/", upload.single("featuredImg"), fetchUser, uploadBlog)
 /* READ BLOG */
 // get a blog using : GET /api/blog/:id
 router.get("/:id", getSingleBlog)
-// get all blogs using : GET /api/blog
+// get all blogs using : GET /api/blog  page=> query
 router.get("/", getBlogs)
-// get all blogs of a author using : GET /api/blog/author/:id
+// get all blogs of a author using : GET /api/blog/author/:id  page=> query
 router.get("/author/:id", getAuthorBlogs)
 
 /* UPDATE BLOG */

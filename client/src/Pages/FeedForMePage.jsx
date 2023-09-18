@@ -6,18 +6,30 @@ import { useSelector } from "react-redux";
 function FeedForMePage() {
   const [blogs, setBlogs] = useState([]);
   //  blogs includes =>  _id, authorData: { authorId, author, avatarImgName }, title, summary, content, createdAt, editedAt,  __v
+  const [pageIdx, setPageIdx] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const token = useSelector((state) => state.auth.token);
 
   const fetchAllBlogs = async () => {
     try {
-      const res = await fetch(`${apiBaseUrl}/api/author/following/feed`, {
-        method: "POST",
-        headers: { "auth-token": token },
-      });
-      const data = await res.json();
-      setBlogs(data);
+      if (hasMore) {
+        const res = await fetch(
+          `${apiBaseUrl}/api/author/following/feed?page=${pageIdx}`,
+          {
+            method: "POST",
+            headers: { "auth-token": token },
+          }
+        );
+        const { data, totalBlogs } = await res.json();
+        console.log(data, totalBlogs);
+        setBlogs(blogs.concat(data));
+        setPageIdx(pageIdx + 1);
+        if (blogs.length === totalBlogs) {
+          setHasMore(false);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +45,11 @@ function FeedForMePage() {
       <>
         <Navbar />
         <div className="px-[calc((100vw-1280px)/2)]">
-          <FeedContainer blogs={blogs} />
+          <FeedContainer
+            blogs={blogs}
+            fetchMoreData={() => fetchAllBlogs()}
+            hasMore={hasMore}
+          />
         </div>
       </>
     </div>

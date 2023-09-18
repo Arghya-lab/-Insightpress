@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Blog = require("../models/Blog");
 
 /* READ AUTHOR DATA */
-const author = async (req, res) => {
+const getAuthor = async (req, res) => {
   try {
     const { id } = req.params; // author id
     const authorData = await User.findById(id);
@@ -62,12 +62,10 @@ const getBookmark = async (req, res) => {
     const { id } = req.user; // data came via token
     const { bookmarks } = await User.findById(id);
     if (bookmarks) {
-      //  optimize this
-      let bookmarkBlogData = [];
-      for (const bookmark of bookmarks) {
-        bookmarkBlogData.push(await Blog.findById(bookmark));
-      }
-      res.status(200).json(bookmarkBlogData);
+      const data = await Promise.all(bookmarks.map(bookmark=>Blog.findById(bookmark).lean()))
+      const totalBlogs =  data.length
+
+      res.status(200).json({ data, totalBlogs });
     } else {
       res.status(400).json("no bookmark found");
     }
@@ -101,19 +99,25 @@ const addRemoveAuthor = async (req, res) => {
 
 const getFollowingFeed = async (req, res) => {
   try {
+    const pageIdx = req.query.page
     const { following } = await User.findById(req.user.id); // req.user data came via token
-    const followingAuthorBlogs = await
-    Blog.find({ "authorData.authorId": { $in: following } }) // finding blogs that are contains authorId any one of following users
-    .sort({ createdAt: "desc" })  // Sort by createdAt in descending order
-    .limit(7)
-    
-    res.status(200).json(followingAuthorBlogs);
+    const data = await
+      Blog.find({ "authorData.authorId": { $in: following } }) // finding blogs that are contains authorId any one of following users
+      .sort({ createdAt: "desc" })  // Sort by createdAt in descending order
+      .skip(pageIdx*7)
+      .limit(7)
+      .lean() // for read-only operations
+    const totalBlogs = await Blog.countDocuments({ "authorData.authorId": { $in: following } })
+
+    res.status(200).json({data, totalBlogs});
   } catch (error) {
     res.status(400).json(error);
   }
 };
+
+
 module.exports = {
-  author,
+  getAuthor,
   editBio,
   addRemoveBookmark,
   getBookmark,
