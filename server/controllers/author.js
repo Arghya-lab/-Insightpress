@@ -35,7 +35,7 @@ const editBio = async (req, res) => {
   }
 };
 
-/* READ, UPDATE BOOKMARK */
+/* UPDATE, READ BOOKMARK */
 const addRemoveBookmark = async (req, res) => {
   try {
     const { id } = req.params; // blog id
@@ -59,6 +59,7 @@ const addRemoveBookmark = async (req, res) => {
 
 const getBookmark = async (req, res) => {
   try {
+    //  add infinite scroll, edit in model with time stamp when bookmark added
     const { id } = req.user; // data came via token
     const { bookmarks } = await User.findById(id);
     if (bookmarks) {

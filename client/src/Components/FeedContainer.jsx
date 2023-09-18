@@ -1,6 +1,7 @@
 import PropType from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostWidget from "./PostWidget";
+import Loading from "./Loading/Loading";
 
 function FeedContainer({ blogs, isOwnPage, fetchMoreData, hasMore }) {
   return (
@@ -8,10 +9,10 @@ function FeedContainer({ blogs, isOwnPage, fetchMoreData, hasMore }) {
       dataLength={blogs.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={<Loading className="text-center" />}
       endMessage={
-        <p style={{ textAlign: "center" }}>
-          <b>Yay! You have seen it all</b>
+        <p className="my-6 text-center font-poppins text-sky-800" >
+          Yep! You have seen it all
         </p>
       }
       scrollableTarget="scrollableDiv">

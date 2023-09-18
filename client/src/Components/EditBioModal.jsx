@@ -61,6 +61,7 @@ function EditBioModal({ authorData }) {
           </p>
           <Formik initialValues={{ bio: "" }} onSubmit={handleSubmit}>
             <Form className="my-6">
+              {/* //  fetch prev bio and put as initial values */}
               <Field
                 type="text"
                 as="textarea"

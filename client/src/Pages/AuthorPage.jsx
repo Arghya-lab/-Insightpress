@@ -54,7 +54,7 @@ function AuthorPage() {
   useEffect(() => {
     fetchAllBlogs();
     fetchAuthorData();
-  }, [authorBlogsApi, authorDataApi]);
+  }, [authorBlogsApi, authorDataApi, fullAuthorData]);
 
   useEffect(() => {
     if (fullAuthorData._id == authorId) {

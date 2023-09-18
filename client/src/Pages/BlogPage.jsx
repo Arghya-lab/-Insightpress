@@ -31,8 +31,8 @@ function BlogPage() {
   const isOwnBlog = authorId === loginUserId;
 
   const [isBookmarked, doToggle] = useToggleBookmark(id);
-  const deleteBlog = useDeleteBlog(id)
-  const editBlog = useEditBlog({ id, title, summary, content })
+  const deleteBlog = useDeleteBlog(id);
+  const editBlog = useEditBlog({ id, title, summary, content });
 
   const originalDateString = createdAt;
   const parsedDate = parseISO(originalDateString);
@@ -49,29 +49,37 @@ function BlogPage() {
     <>
       <Navbar />
       <div className="px-[calc((100vw-1280px)/2)] my-8 mx-4 text-left">
-        <div className="text-2xl m-4 flex items-center justify-end">
-          {isOwnBlog ? (
-            <>
-              <button className="text-orange-500 mx-2" onClick={()=>editBlog()}>
-                <MdEditNote />
-              </button>
-              <button className="text-rose-600 mx-2" onClick={()=>deleteBlog()}>
-                <MdDeleteForever />
-              </button>
-            </>
-          ) : undefined}
-          <button className="hover:text-zinc-800" onClick={() => doToggle()}>
-            {isBookmarked ? (
-              <PiBookmarkSimpleFill />
-            ) : (
-              <PiBookmarkSimpleLight />
-            )}
-          </button>
+        <div className="text-2xl flex items-center justify-end">
+          <div className="p-2 space-x-2 text-lg pb-1 pl-1 rounded-md border border-zinc-800">
+            {isOwnBlog ? (
+              <>
+                <button
+                  className="text-orange-500 hover:text-orange-400"
+                  onClick={() => editBlog()}>
+                  <MdEditNote />
+                </button>
+                <button
+                  className="text-rose-600 hover:text-rose-500"
+                  onClick={() => deleteBlog()}>
+                  <MdDeleteForever />
+                </button>
+              </>
+            ) : undefined}
+            <button className="hover:text-zinc-800" onClick={() => doToggle()}>
+              {isBookmarked ? (
+                <PiBookmarkSimpleFill />
+              ) : (
+                <PiBookmarkSimpleLight />
+              )}
+            </button>
+          </div>
         </div>
         <h1 className="font-poppins text-4xl font-bold text-zinc-900">
           {title}
         </h1>
-        <div className="my-2 text-zinc-950 text-xl" style={{ fontFamily: "Nunito" }}>
+        <div
+          className="my-2 text-zinc-950 text-xl"
+          style={{ fontFamily: "Nunito" }}>
           {summary}
         </div>
         <div className="my-10">
@@ -85,6 +93,7 @@ function BlogPage() {
             />
             <p className="font-Roboto text-zinc-700 text-lg">{author}</p>
           </div>
+          {/* If edited show edited date also */}
           <p className="font-Roboto text-zinc-500 text-sm">{timePassed} ago</p>
         </div>
         {featuredImgName && (

@@ -73,16 +73,16 @@ function PostWidget({
           />
           <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
         </div>
-        <div>
+        <div className="space-x-2 text-lg">
           {isOwnPage ? (
             <>
               <button
-                className="text-orange-500 mx-2"
+                className="text-orange-500"
                 onClick={() => editBlog()}>
                 <MdEditNote />
               </button>
               <button
-                className="text-rose-600 mx-2"
+                className="text-rose-600"
                 onClick={() => deleteBlog()}>
                 <MdDeleteForever />
               </button>
