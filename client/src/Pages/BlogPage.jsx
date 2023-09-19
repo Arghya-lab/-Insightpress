@@ -104,7 +104,7 @@ function BlogPage() {
           />
         )}
         <div
-          className="no-tailwind"
+          className="font-sans"
           style={{ fontFamily: "Nunito", fontSize: "1.2rem", color: "rgb(231 229 228)"}}
           dangerouslySetInnerHTML={{ __html: content }}
         />

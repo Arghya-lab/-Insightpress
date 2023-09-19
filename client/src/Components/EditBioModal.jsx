@@ -37,7 +37,7 @@ function EditBioModal({ authorData }) {
       className={`fixed ${
         isModalOpen ? "block" : "hidden"
       } inset-0 bg-zinc-800 bg-opacity-80 overflow-y-auto h-full w-full`}>
-      <div className="relative top-36 mx-auto p-5 border w-[525px] max-w-[94%] shadow-lg rounded-md bg-white">
+      <div className="relative top-36 mx-auto p-5 border dark:border-zinc-700 w-[525px] max-w-[94%] shadow-lg rounded-md bg-white dark:bg-stone-950">
         <div className="mt-3 text-center">
           <div className="flex justify-between items-center ml-6">
             <div className="flex justify-start items-center space-x-4">
@@ -46,17 +46,17 @@ function EditBioModal({ authorData }) {
                 src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
                 alt="Avatar"
               />
-              <p className="text-lg font-poppins text-zinc-800">
+              <p className="text-lg font-poppins text-zinc-800 dark:text-stone-200">
                 {authorData?.name}
               </p>
             </div>
             <button
-              className="px-4 h-12 rounded-md hover:bg-zinc-300"
+              className="px-4 h-12 rounded-md dark:text-stone-50 hover:bg-zinc-300 hover:dark:bg-stone-700"
               onClick={() => dispatch(closeModal())}>
               <RxCross2 />
             </button>
           </div>
-          <p className="mt-4 font-Roboto text-zinc-700">
+          <p className="mt-4 font-Roboto text-zinc-700 dark:text-stone-300">
             Put your new Bio here
           </p>
           <Formik initialValues={{ bio: "" }} onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ function EditBioModal({ authorData }) {
               />
               <button
                 type="submit"
-                className="btn h-10 w-2/3 max-w-[252px] mx-auto bg-zinc-900 text-white text-center hover:bg-zinc-800">
+                className="btn bg-zinc-950 dark:bg-stone-100 text-white dark:text-stone-950 hover:bg-zinc-800 hover:dark:bg-stone-200 w-10/12 max-w-xl h-10">
                 Edit Bio
               </button>
             </Form>
