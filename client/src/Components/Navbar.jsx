@@ -12,7 +12,6 @@ function Navbar() {
   const id = useSelector((state) => state.auth.id);
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
-
   useEffect(() => {
     if (token) {
       const fetchAuthor = async () => {
@@ -33,27 +32,31 @@ function Navbar() {
 
   return (
     <>
-      <div className="px-[calc((100vw-1280px)/2)] border-b-2 flexCenter ">
-        <h1 className="text-zinc-900 font-KenyanCoffee text-4xl m-4">
-          Insight Social
-        </h1>
-        <div className="mx-4 flexCenter space-x-3"
-            onClick={()=>dispatch(openSlide())}>
-          <img
-            className="w-10 h-10 rounded-full object-cover cursor-pointer"
-            src={
-              token
-                ? `${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`
-                : "/assets/profileIconDefault.png"
-            }
-            alt="Avatar"
-          />
+      <div className="w-full top-0 fixed">
+        <div className="px-[calc((100vw-1280px)/2)] border-b-2 dark:border-stone-700 flexCenter dark:bg-stone-950">
+          <h1 className="text-zinc-900 dark:text-stone-50 font-KenyanCoffee text-4xl m-4">
+            Insight Social
+          </h1>
+          <div
+            className="mx-4 flexCenter space-x-3"
+            onClick={() => dispatch(openSlide())}>
+            <img
+              className="w-10 h-10 rounded-full object-cover cursor-pointer"
+              src={
+                token
+                  ? `${serverBaseUrl}/assets/avatar/${userData?.avatarImgName}`
+                  : "/assets/profileIconDefault.png"
+              }
+              alt="Avatar"
+            />
+          </div>
         </div>
+        <UserActionsOverlay
+          key={isSlideOpen ? "open" : "close"}
+          userData={userData}
+        />
       </div>
-      <UserActionsOverlay
-        key={isSlideOpen?"open":"close"}
-        userData={userData}
-      />
+      <div className="pt-24"></div>
     </>
   );
 }

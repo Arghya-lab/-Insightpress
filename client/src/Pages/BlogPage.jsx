@@ -50,7 +50,7 @@ function BlogPage() {
       <Navbar />
       <div className="px-[calc((100vw-1280px)/2)] my-8 mx-4 text-left">
         <div className="text-2xl flex items-center justify-end">
-          <div className="p-2 space-x-2 text-lg pb-1 pl-1 rounded-md border border-zinc-800">
+          <div className="p-2 space-x-2 text-lg pb-1 pl-1 rounded-md border border-zinc-800 dark:border-stone-200">
             {isOwnBlog ? (
               <>
                 <button
@@ -65,7 +65,7 @@ function BlogPage() {
                 </button>
               </>
             ) : undefined}
-            <button className="hover:text-zinc-800" onClick={() => doToggle()}>
+            <button className="dark:text-stone-50 hover:text-zinc-800 hover:dark:text-stone-200" onClick={() => doToggle()}>
               {isBookmarked ? (
                 <PiBookmarkSimpleFill />
               ) : (
@@ -74,11 +74,11 @@ function BlogPage() {
             </button>
           </div>
         </div>
-        <h1 className="font-poppins text-4xl font-bold text-zinc-900">
+        <h1 className="font-poppins text-4xl font-bold text-zinc-900 dark:text-stone-100">
           {title}
         </h1>
         <div
-          className="my-2 text-zinc-950 text-xl"
+          className="my-2 text-zinc-950 dark:text-stone-200 text-xl"
           style={{ fontFamily: "Nunito" }}>
           {summary}
         </div>
@@ -91,10 +91,10 @@ function BlogPage() {
               className="w-10 rounded-full aspect-square"
               alt="Avatar"
             />
-            <p className="font-Roboto text-zinc-700 text-lg">{author}</p>
+            <p className="font-Roboto text-zinc-700 dark:text-stone-300 text-lg">{author}</p>
           </div>
           {/* If edited show edited date also */}
-          <p className="font-Roboto text-zinc-500 text-sm">{timePassed} ago</p>
+          <p className="font-Roboto text-zinc-500 dark:text-stone-500 text-sm">publish {timePassed} ago</p>
         </div>
         {featuredImgName && (
           <img
@@ -105,7 +105,7 @@ function BlogPage() {
         )}
         <div
           className="no-tailwind"
-          style={{ fontFamily: "Nunito", fontSize: "1.2rem" }}
+          style={{ fontFamily: "Nunito", fontSize: "1.2rem", color: "rgb(231 229 228)"}}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>

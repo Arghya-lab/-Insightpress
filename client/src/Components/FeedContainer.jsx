@@ -11,7 +11,7 @@ function FeedContainer({ blogs, isOwnPage, fetchMoreData, hasMore }) {
       hasMore={hasMore}
       loader={<Loading className="text-center" />}
       endMessage={
-        <p className="my-6 text-center font-poppins text-sky-800" >
+        <p className="my-6 text-center font-poppins text-sky-800 dark:text-sky-200" >
           Yep! You have seen it all
         </p>
       }

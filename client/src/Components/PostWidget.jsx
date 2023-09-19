@@ -61,7 +61,7 @@ function PostWidget({
   };
 
   return (
-    <div className="mx-4 p-3 max-w-4xl my-3 text-left border-[2px] rounded-lg shadow-md">
+    <div className="mx-4 p-3 max-w-4xl my-3 text-left border-[2px] dark:border-stone-700 rounded-lg shadow-md">
       <div className="flex justify-between items-center">
         <div
           className="mb-2 flex items-center space-x-2 cursor-pointer"
@@ -71,7 +71,7 @@ function PostWidget({
             className="w-7 rounded-full aspect-square"
             alt="Avatar"
           />
-          <p className="font-Roboto text-zinc-700 text-sm">{author}</p>
+          <p className="font-Roboto text-zinc-700 dark:text-stone-300 text-sm">{author}</p>
         </div>
         <div className="space-x-2 text-lg">
           {isOwnPage ? (
@@ -88,7 +88,7 @@ function PostWidget({
               </button>
             </>
           ) : undefined}
-          <button className="hover:text-zinc-800" onClick={() => doToggle()}>
+          <button className="dark:text-stone-50 hover:dark:text-stone-200  hover:text-zinc-800 " onClick={() => doToggle()}>
             {isBookmarked ? (
               <PiBookmarkSimpleFill />
             ) : (
@@ -98,14 +98,14 @@ function PostWidget({
         </div>
       </div>
       <div className="cursor-pointer" onClick={handleShowBlog}>
-        <p className="mb-1 font-poppins text-xl font-semibold">{title}</p>
+        <p className="mb-1 font-poppins text-xl font-semibold dark:text-stone-50">{title}</p>
         <p
-          className=" text-zinc-700 leading-tight line-clamp-2"
+          className=" text-zinc-700 dark:text-stone-300 leading-tight line-clamp-2"
           style={{ fontFamily: "Nunito", fontWeight: 600 }}>
           {summary}
         </p>
       </div>
-      <p className="mt-2 font-Roboto text-zinc-500 text-xs">{timePassed} ago</p>
+      <p className="mt-2 font-Roboto text-zinc-500 dark:text-stone-500 text-xs">{timePassed} ago</p>
     </div>
   );
 }

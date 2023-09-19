@@ -15,26 +15,26 @@ function AuthorInfoWidget({ authorData }) {
   const isOwnAuthorPage = authorData._id === userId;
 
   return (
-    <div className="w-[94%] sm:w-[425px] m-4 p-4 border-[2px] rounded-lg shadow-md ">
+    <div className="w-[94%] sm:w-[425px] m-4 p-4 border-[2px] dark:border-stone-700 rounded-lg shadow-md ">
       <img
         className="block m-auto w-36 object-cover aspect-square rounded-full"
         src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
       />
-      <p className="my-6 font-poppins text-lg font-semibold text-purple-950">
+      <p className="my-6 font-poppins text-lg font-semibold text-purple-950 dark:text-stone-50">
         {authorData?.name}
       </p>
-      <p className="font-Roboto mx-10 text-zinc-700">{authorData?.bio}</p>
+      <p className="font-Roboto mx-10 text-zinc-700 dark:text-stone-300">{authorData?.bio}</p>
       {token && isOwnAuthorPage ? (
         <button
           type="button"
-          className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 text-zinc-900 hover:bg-zinc-300 flex items-center justify-around"
+          className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 dark:bg-stone-800 text-zinc-900 dark:text-stone-100 hover:bg-zinc-300 hover:dark:bg-stone-700 flex items-center justify-around"
           onClick={() => dispatch(openModal())}>
           Edit Bio
         </button>
       ) : token ? (
         <button
           type="button"
-          className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 text-zinc-900 hover:bg-zinc-300 flex items-center justify-around"
+          className="btn h-10 w-2/3 max-w-[252px] mx-auto mt-10 bg-zinc-200 dark:bg-stone-800 text-zinc-900 dark:text-stone-100 hover:bg-zinc-300 hover:dark:bg-stone-700 flex items-center justify-around"
           onClick={() => followUnfollowFriend()}>
           {isFollowing ? "Unfollow" : "Follow"}
           {isFollowing ? <SlUserUnfollow /> : <SlUserFollow />}

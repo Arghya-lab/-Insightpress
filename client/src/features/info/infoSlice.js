@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  isLightMode: true,
+  mode: "light",
   isSlideOpen: false,
   isModalOpen: false,
 }
@@ -10,8 +10,8 @@ export const infoSlice = createSlice({
   name: 'info',
   initialState,
   reducers: {
-    changeMode: (state) => {
-      state.isLightMode = !state.isLightMode
+    setMode: (state, actions) => {
+      state.mode = actions.payload
     },
     openSlide: (state) => {
       state.isSlideOpen = true
@@ -28,6 +28,6 @@ export const infoSlice = createSlice({
   },
 })
 
-export const { changeMode, openSlide, closeSlide, openModal, closeModal, } = infoSlice.actions
+export const { setMode, openSlide, closeSlide, openModal, closeModal, } = infoSlice.actions
 
 export default infoSlice.reducer

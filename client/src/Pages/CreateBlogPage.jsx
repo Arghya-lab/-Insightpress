@@ -99,14 +99,14 @@ function CreateBlogPage() {
               type="text"
               name="title"
               placeholder="Write title here..."
-              className="w-full px-4 h-10 border-2 border-zinc-400 text-zinc-700 text-base"
+              className="w-full px-4 h-10 border-2 border-zinc-400 dark:border-stone-600 text-zinc-700 dark:text-stone-300 text-base dark:bg-stone-950"
               style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
             />
             <Field
               type="text"
               name="summary"
               placeholder="Write content here..."
-              className="w-full px-4 h-10 border-2 border-zinc-400 text-zinc-600 text-base"
+              className="w-full px-4 h-10 border-2 border-zinc-400 dark:border-stone-600 text-zinc-700 dark:text-stone-300 text-base dark:bg-stone-950"
               style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
             />
             {isEditPage ? undefined : (
@@ -128,14 +128,14 @@ function CreateBlogPage() {
                     placeholder={"Write something awesome..."}
                     value={field.value}
                     onChange={field.onChange(field.name)}
-                    style={{ height: 400 }}
+                    style={{ height: 400, backgroundColor: "whitesmoke" }}
                   />
                 </div>
               )}
             </Field>
             <button
               type="submit"
-              className="btn my-16 bg-zinc-950 text-white hover:bg-zinc-800">
+              className="btn my-16 bg-zinc-950 dark:bg-stone-100 text-white dark:text-stone-950 hover:bg-zinc-800 hover:dark:bg-stone-300">
               {isEditPage ? "Confirm Edit" : "Create Blog"}
             </button>
           </Form>

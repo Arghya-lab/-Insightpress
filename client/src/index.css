@@ -30,7 +30,7 @@ body {
 
 @layer components {
   .inputField {
-    @apply w-10/12 max-w-xl h-10 px-4 border-2 border-zinc-500 font-poppins rounded-md;
+    @apply w-10/12 max-w-xl h-10 px-4 border-2 dark:text-stone-50 dark:bg-stone-950 hover:bg-zinc-200 dark:hover:bg-stone-800  border-zinc-500 font-poppins rounded-md;
   }
 }
 
@@ -42,7 +42,7 @@ body {
 
 @layer components {
   .actionOverlayBtnContainer {
-    @apply flex justify-between items-center text-xl text-zinc-800 font-poppins h-12 p-2 rounded-md cursor-pointer hover:bg-zinc-200;
+    @apply flex justify-between items-center text-xl text-zinc-800 dark:text-stone-200 font-poppins h-12 p-2 rounded-md cursor-pointer hover:bg-zinc-200 hover:dark:bg-stone-800;
   }
 }
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setAuth } from "../features/auth/authSlice";
 import Dropzone from "../Components/Dropzone";
 import { closeSlide } from "../features/info/infoSlice";
+import Navbar from "../Components/Navbar"
 
 function LoginPage() {
   const [isLoginPage, setIsLoginPage] = useState(true);
@@ -74,9 +75,7 @@ function LoginPage() {
 
   return (
     <>
-      <h1 className="text-white bg-black font-serif text-4xl p-4">
-        Insight Social
-      </h1>
+      <Navbar />
       <Formik
         initialValues={
           isLoginPage ? loginPageInitialValues : SignupPageInitialValues
@@ -120,7 +119,7 @@ function LoginPage() {
           />
           <button
             type="submit"
-            className="btn bg-zinc-950 text-white hover:bg-zinc-800  w-10/12 max-w-xl h-10">
+            className="btn bg-zinc-950 dark:bg-stone-50 text-white dark:text-stone-950 hover:bg-zinc-800 hover:dark:bg-stone-200 w-10/12 max-w-xl h-10">
             {isLoginPage ? "Login" : "Signup"}
           </button>
         </Form>
@@ -128,7 +127,7 @@ function LoginPage() {
       <button
         type="button"
         onClick={() => setIsLoginPage(!isLoginPage)}
-        className="mt-12 w-2/3 max-w-xl h-8 bg-transparent text-black hover:text-zinc-600 font-Roboto">
+        className="mt-12 w-2/3 max-w-xl h-8 bg-transparent text-black  dark:text-stone-50 hover:text-zinc-600 hover:dark:text-stone-400 font-Roboto">
         {isLoginPage
           ? "Don’t have an account? Join"
           : "Already have an account? Login"}
