@@ -6,26 +6,26 @@ import { useSelector } from "react-redux";
 function BookmarkPage() {
   const [blogs, setBlogs] = useState([]);
   //  blogs includes =>  _id, authorData: { authorId, author, avatarImgName }, title, summary, content, createdAt, editedAt,  __v
-  const [pageIdx, setPageIdx] = useState(0);
+  const [pageNo, setPageNo] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const token = useSelector((state) => state.auth.token);
 
-  const fetchAllBlogs = async () => {
+  const fetchBlogs = async () => {
     try {
       if (hasMore) {
         const res = await fetch(
-          `${apiBaseUrl}/api/author/bookmark?page=${pageIdx}`,
+          `${apiBaseUrl}/api/author/bookmark?pageNo=${pageNo}`,
           {
-            method: "POST",
+            method: "GET",
             headers: { "auth-token": token },
           }
         );
         const { data, totalBlogs } = await res.json();
         console.log(data, totalBlogs);
         setBlogs(blogs.concat(data));
-        setPageIdx(pageIdx + 1);
+        setPageNo(pageNo + 1);
         if (blogs.length === totalBlogs) {
           setHasMore(false);
         }
@@ -35,7 +35,7 @@ function BookmarkPage() {
     }
   };
   useEffect(() => {
-    fetchAllBlogs();
+    fetchBlogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,11 +43,12 @@ function BookmarkPage() {
     <>
       <Navbar />
       <div className="px-[calc((100vw-1280px)/2)] flex flex-col items-center">
+      {blogs.length !== 0 &&
         <FeedContainer
           blogs={blogs}
-          fetchMoreData={() => fetchAllBlogs()}
+          fetchMoreData={() => fetchBlogs()}
           hasMore={hasMore}
-        />
+        />}
       </div>
     </>
   );

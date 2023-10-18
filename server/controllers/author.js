@@ -59,13 +59,21 @@ const addRemoveBookmark = async (req, res) => {
 
 const getBookmark = async (req, res) => {
   try {
-    //  add infinite scroll, edit in model with time stamp when bookmark added
+    const { pageNo } = req.query;
     const { id } = req.user; // data came via token
     const { bookmarks } = await User.findById(id);
+    const pageSize = 8;
     if (bookmarks) {
-      const data = await Promise.all(bookmarks.map(bookmark=>Blog.findById(bookmark).lean()))
-      const totalBlogs =  data.length
-
+      const skip = (pageNo - 1) * pageSize;
+      const totalBlogs = bookmarks.length;
+      const allBookmarksBlogs = await Promise.all(
+        bookmarks.map((bookmark) => Blog.findById(bookmark).lean())
+      );
+      const data = allBookmarksBlogs.filter((item, idx) => {
+        if (idx >= skip && idx < skip + pageSize) {
+          return item;
+        }
+      });
       res.status(200).json({ data, totalBlogs });
     } else {
       res.status(400).json("no bookmark found");
@@ -100,22 +108,22 @@ const addRemoveAuthor = async (req, res) => {
 
 const getFollowingFeed = async (req, res) => {
   try {
-    const pageIdx = req.query.page
+    const pageIdx = req.query.page;
     const { following } = await User.findById(req.user.id); // req.user data came via token
-    const data = await
-      Blog.find({ "authorData.authorId": { $in: following } }) // finding blogs that are contains authorId any one of following users
-      .sort({ createdAt: "desc" })  // Sort by createdAt in descending order
-      .skip(pageIdx*7)
+    const data = await Blog.find({ "authorData.authorId": { $in: following } }) // finding blogs that are contains authorId any one of following users
+      .sort({ createdAt: "desc" }) // Sort by createdAt in descending order
+      .skip(pageIdx * 7)
       .limit(7)
-      .lean() // for read-only operations
-    const totalBlogs = await Blog.countDocuments({ "authorData.authorId": { $in: following } })
+      .lean(); // for read-only operations
+    const totalBlogs = await Blog.countDocuments({
+      "authorData.authorId": { $in: following },
+    });
 
-    res.status(200).json({data, totalBlogs});
+    res.status(200).json({ data, totalBlogs });
   } catch (error) {
     res.status(400).json(error);
   }
 };
-
 
 module.exports = {
   getAuthor,

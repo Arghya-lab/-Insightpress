@@ -15,8 +15,8 @@ router.patch("/editBio", fetchUser, editBio)
 /* READ, UPDATE BOOKMARK */
 // add, remove a bookmark id using : PATCH /api/author/bookmark/:id  => token require
 router.patch("/bookmark/:id", fetchUser, addRemoveBookmark)
-// get bookmarks data using : POST /api/author/bookmark/  page=> query  => token require
-router.post("/bookmark", fetchUser, getBookmark)
+// get bookmarks data using : GET /api/author/bookmark  page=> query  => token require
+router.get("/bookmark", fetchUser, getBookmark)
 
 /* UPDATE FOLLOWER & READ FOLLOWER POST */
 // add, remove author id using : PATCH /api/author/following/:id  => token require

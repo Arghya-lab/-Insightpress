@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import AuthorInfoWidget from "../Components/AuthorInfoWidget";
 import { useSelector } from "react-redux";
@@ -16,9 +16,10 @@ function AuthorPage() {
   const [hasMore, setHasMore] = useState(true);
 
   const { id } = useParams();
-  const token = useSelector((state) => state.auth.token);
+  // const location = useLocation();
+  // const  id = location.state
   const authorId = useSelector((state) => state.auth.id);
-
+console.log(id);
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const authorBlogsApi = `${apiBaseUrl}/api/blog/author/${id}?page=${pageIdx}`;
   const authorDataApi = `${apiBaseUrl}/api/author/${id}`;
@@ -27,6 +28,7 @@ function AuthorPage() {
     try {
       const res = await fetch(authorDataApi);
       const data = await res.json();
+      console.log("authorData", data);
       setFullAuthorData(data);
     } catch (error) {
       console.log(error);
@@ -36,9 +38,10 @@ function AuthorPage() {
   const fetchAllBlogs = async () => {
     try {
       if (hasMore) {
+        console.log("authorBlogsApi", authorBlogsApi);
         const res = await fetch(authorBlogsApi);
         const { data, totalBlogs } = await res.json();
-        console.log(data, totalBlogs);
+        console.log("blogData", data, totalBlogs);
         setBlogs(blogs.concat(data));
         setPageIdx(pageIdx + 1);
         if (blogs.length === totalBlogs) {
@@ -52,30 +55,35 @@ function AuthorPage() {
   };
 
   useEffect(() => {
-    fetchAllBlogs();
+    setBlogs([]); // Reset blogs to empty array
+    setPageIdx(0); // Reset page index to 0
+    setHasMore(true); // Reset hasMore to true
+    console.log("pramId", id);
+
     fetchAuthorData();
-  }, [authorBlogsApi, authorDataApi, fullAuthorData]);
+    fetchAllBlogs();
+
+  }, [id,]);
 
   useEffect(() => {
     if (fullAuthorData._id == authorId) {
       setIsOwnPage(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullAuthorData]);
+  }, [])
+  
 
   return (
     <div>
       <Navbar />
+      {/* {console.log("hi", blogs)} */}
       <div className="px-[calc((100vw-1280px)/2)] flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between">
-        <div>
-          <FeedContainer
-            blogs={blogs}
-            isOwnPage={isOwnPage}
-            fetchMoreData={() => fetchAllBlogs()}
-            hasMore={hasMore}
-          />
-        </div>
-        {token ? <EditBioModal authorData={fullAuthorData} /> : undefined}
+        <FeedContainer
+          blogs={blogs}
+          isOwnPage={isOwnPage}
+          fetchMoreData={() => fetchAllBlogs()}
+          hasMore={hasMore}
+        />
+        {isOwnPage ? <EditBioModal authorData={fullAuthorData} /> : undefined}
         <AuthorInfoWidget authorData={fullAuthorData} />
       </div>
     </div>

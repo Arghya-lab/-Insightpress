@@ -3,16 +3,16 @@ import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../features/info/infoSlice";
 import { RxCross2 } from "react-icons/rx";
+import { useEffect } from "react";
 
 function EditBioModal({ authorData }) {
+  //  authorData contains =>  _id, name, email, avatarImgName, bio, bookmarks, createdAt, updatedAt, __v
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const isModalOpen = useSelector((state) => state.info.isModalOpen);
   const serverBaseUrl = import.meta.env.VITE_Server_BASE_URL;
 
   const handleSubmit = async (values, actions) => {
-    console.log(values);
-    console.log("submitted", values);
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
     const res = await fetch(`${apiBaseUrl}/api/author/editBio`, {
@@ -20,10 +20,8 @@ function EditBioModal({ authorData }) {
       headers: { "Content-Type": "application/json", "auth-token": token },
       body: JSON.stringify(values),
     });
-    console.log(res);
     if (res.ok) {
       const data = await res.json();
-      console.log(data);
       console.log(data);
       actions.setSubmitting(false);
       dispatch(closeModal());
@@ -31,6 +29,10 @@ function EditBioModal({ authorData }) {
       console.log("wrong credentials");
     }
   };
+  useEffect(() => {
+    console.log(authorData.bio)
+  }, [])
+  
 
   return (
     <div
@@ -43,11 +45,11 @@ function EditBioModal({ authorData }) {
             <div className="flex justify-start items-center space-x-4">
               <img
                 className="w-12 aspect-square rounded-full object-cover"
-                src={`${serverBaseUrl}/assets/avatar/${authorData?.avatarImgName}`}
+                src={`${serverBaseUrl}/assets/avatar/${authorData.avatarImgName}`}
                 alt="Avatar"
               />
               <p className="text-lg font-poppins text-zinc-800 dark:text-stone-200">
-                {authorData?.name}
+                {authorData.name}
               </p>
             </div>
             <button
@@ -59,9 +61,8 @@ function EditBioModal({ authorData }) {
           <p className="mt-4 font-Roboto text-zinc-700 dark:text-stone-300">
             Put your new Bio here
           </p>
-          <Formik initialValues={{ bio: "" }} onSubmit={handleSubmit}>
+          <Formik initialValues={{ bio: authorData.bio }} onSubmit={handleSubmit}>
             <Form className="my-6">
-              {/* //  fetch prev bio and put as initial values */}
               <Field
                 type="text"
                 as="textarea"

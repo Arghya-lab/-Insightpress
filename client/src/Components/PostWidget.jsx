@@ -38,7 +38,7 @@ function PostWidget({
 
   const handleAuthorClick = () => {
     dispatch(closeSlide());
-    navigate(`/author/${authorId}`);
+    navigate(`/author/${authorId}`, { id: authorId });
   };
 
   const handleShowBlog = async () => {
