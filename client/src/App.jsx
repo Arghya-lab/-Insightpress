@@ -18,13 +18,17 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="Login" element={<LoginPage />} />
         <Route path="blog/:id" element={<BlogPage />} />
+        <Route path="author/:id" element={<AuthorPage />} />
         {/* Need Auth */}
         {token ? (
           <Route path="create" element={<CreateBlogPage />} />
         ) : undefined}
-        <Route path="author/:id" element={<AuthorPage />} />
-        <Route path="bookmarks" element={<BookmarkPage />} />
-        <Route path="feedForMe" element={<FeedForMePage />} />
+        {token ? (
+          <Route path="bookmarks" element={<BookmarkPage />} />
+        ) : undefined}
+        {token ? (
+          <Route path="feedForMe" element={<FeedForMePage />} />
+        ) : undefined}
       </Routes>
     </div>
   );

@@ -18,7 +18,7 @@ function BookmarkPage() {
         const res = await fetch(
           `${apiBaseUrl}/api/author/bookmark?pageNo=${pageNo}`,
           {
-            method: "GET",
+            method: "POST",
             headers: { "auth-token": token },
           }
         );
@@ -43,12 +43,11 @@ function BookmarkPage() {
     <>
       <Navbar />
       <div className="px-[calc((100vw-1280px)/2)] flex flex-col items-center">
-      {blogs.length !== 0 &&
         <FeedContainer
           blogs={blogs}
           fetchMoreData={() => fetchBlogs()}
           hasMore={hasMore}
-        />}
+        />
       </div>
     </>
   );
