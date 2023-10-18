@@ -9,7 +9,10 @@ const signupUser = async (req, res) => {
   // req.file is the `avatarImg` file
   try {
     // req.body will hold the text fields
-    const { name, email, avatarImgName, bio, password } = req.body
+    const { name, email, avatarImgName, bio, password } = req.body;
+    if (await User.findOne({ email }))
+      return res.status(400).json({ error: "User already present" });
+
     const salt = bcrypt.genSaltSync(8);
     const hashPassword = bcrypt.hashSync(password, salt);
     const user = await User.create({
@@ -21,10 +24,11 @@ const signupUser = async (req, res) => {
       bookmarks: [],
     });
     const token = jwt.sign({ id: user._id, name: user.name, email }, jwtKey);
-    res.status(200).send({ name: user.name, id: user._id, avatarImgName, token });
+    res
+      .status(200)
+      .json({ name: user.name, id: user._id, avatarImgName, token });
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    res.status(400).json(error);
   }
 };
 
@@ -32,13 +36,18 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({error: "Incorrect credentials"});
+
     const isCorrectPass = bcrypt.compareSync(password, user.password);
-    if (isCorrectPass) {
-      const token = jwt.sign({  id: user._id, name: user.name, email }, jwtKey);
-      res.status(200).json({ name: user.name, id: user._id, bookmarks: user.bookmarks, token });
-    } else {
-      res.status(400).json("Incorrect credentials");
-    }
+    if (!isCorrectPass) return res.status(400).json("Incorrect credentials");
+
+    const token = jwt.sign({ id: user._id, name: user.name, email }, jwtKey);
+    res.status(200).json({
+      name: user.name,
+      id: user._id,
+      bookmarks: user.bookmarks,
+      token,
+    });
   } catch (error) {
     res.status(400).json(error);
   }
