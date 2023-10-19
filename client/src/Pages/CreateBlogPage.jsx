@@ -85,6 +85,7 @@ function CreateBlogPage() {
 
   useEffect(() => {
     setIsEditPage(location.state ? location.state.isEditPurpose : false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -128,7 +129,7 @@ function CreateBlogPage() {
                     placeholder={"Write something awesome..."}
                     value={field.value}
                     onChange={field.onChange(field.name)}
-                    style={{ height: 400, backgroundColor: "whitesmoke" }}
+                    style={{ overflow: "visible", backgroundColor: "whitesmoke" }}
                   />
                 </div>
               )}

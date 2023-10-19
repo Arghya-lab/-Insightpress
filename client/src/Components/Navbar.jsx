@@ -32,7 +32,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-full top-0 fixed">
+      <div className="w-full top-0 fixed z-40 bg-white dark:bg-stone-950">
         <div className="px-[calc((100vw-1280px)/2)] border-b-2 dark:border-stone-700 flexCenter dark:bg-stone-950">
           <h1 className="text-zinc-900 dark:text-stone-50 font-KenyanCoffee text-4xl m-4">
             Insight Social

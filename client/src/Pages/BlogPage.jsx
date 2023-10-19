@@ -65,7 +65,9 @@ function BlogPage() {
                 </button>
               </>
             ) : undefined}
-            <button className="dark:text-stone-50 hover:text-zinc-800 hover:dark:text-stone-200" onClick={() => doToggle()}>
+            <button
+              className="dark:text-stone-50 hover:text-zinc-800 hover:dark:text-stone-200"
+              onClick={() => doToggle()}>
               {isBookmarked ? (
                 <PiBookmarkSimpleFill />
               ) : (
@@ -91,10 +93,14 @@ function BlogPage() {
               className="w-10 rounded-full aspect-square"
               alt="Avatar"
             />
-            <p className="font-Roboto text-zinc-700 dark:text-stone-300 text-lg">{author}</p>
+            <p className="font-Roboto text-zinc-700 dark:text-stone-300 text-lg">
+              {author}
+            </p>
           </div>
           {/* If edited show edited date also */}
-          <p className="font-Roboto text-zinc-500 dark:text-stone-500 text-sm">publish {timePassed} ago</p>
+          <p className="font-Roboto text-zinc-500 dark:text-stone-500 text-sm">
+            publish {timePassed} ago
+          </p>
         </div>
         {featuredImgName && (
           <img
@@ -103,10 +109,12 @@ function BlogPage() {
             alt="featured image"
           />
         )}
-        <article
-        className="prose dark:prose-invert lg:prose-xl"
-        dangerouslySetInnerHTML={{ __html: content }}
-        />
+        <div className="max-w-3xl m-auto mb-24">
+          <article
+            className="prose dark:prose-invert lg:prose-xl max-w-none"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        </div>
       </div>
     </>
   );
