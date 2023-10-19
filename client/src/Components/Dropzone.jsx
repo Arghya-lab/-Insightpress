@@ -67,7 +67,7 @@ function Dropzone(props) {
 
   return (
     <div
-      className={`container flex flex-col items-center space-y-4 ${
+      className={`container flex flex-col items-center space-y-4 mb-6 ${
         isAvatar ? "w-10/12 max-w-xl" : "mx-auto my-8 w-full max-w-4xl"
       }`}>
       {file && (
