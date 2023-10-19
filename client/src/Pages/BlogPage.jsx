@@ -103,10 +103,9 @@ function BlogPage() {
             alt="featured image"
           />
         )}
-        <div
-          className="font-sans"
-          style={{ fontFamily: "Nunito", fontSize: "1.2rem", color: "rgb(231 229 228)"}}
-          dangerouslySetInnerHTML={{ __html: content }}
+        <article
+        className="prose dark:prose-invert lg:prose-xl"
+        dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
     </>
