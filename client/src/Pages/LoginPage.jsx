@@ -15,8 +15,8 @@ const SignupSchema = Yup.object().shape({
     .required("Full name is required"),
   email: Yup.string().email("Invalid email").required("Email required"),
   bio: Yup.string()
-    .min(3, "Bio is too Short! it should be at least 3 in character.")
-    .max(100, "Too Long! Bio have to within 100 character."),
+    .min(3, "Bio is too Short! It should be at least 3 in characters.")
+    .max(100, "Too Long! Bio have to within 100 characters."),
   password: Yup.string().min(6, "Too Short!").required("Password required"),
 });
 
